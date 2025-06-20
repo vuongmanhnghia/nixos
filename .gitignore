@@ -1,0 +1,37 @@
+# Generated files
+result
+result-*
+
+# Secrets (even though they should be encrypted)
+secrets/*.key
+secrets/*.age
+*.key
+*.pem
+
+# Hardware-specific (should be customized per machine)
+# Uncomment if you want to ignore hardware configs
+# hosts/*/hardware-configuration.nix
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Build artifacts
+*.log
+.direnv/
+
+# Age keys (used by sops-nix)
+keys.txt
+key.txt 

@@ -86,13 +86,13 @@
       evolution-data-server.enable = true;
       gnome-settings-daemon.enable = true;
       gnome-online-accounts.enable = true;  # Online accounts integration
-      tracker-miners.enable = true;        # File indexing
-      tracker.enable = true;               # Search functionality
+      localsearch.enable = true;        # File indexing (was tracker-miners)
+      tinysparql.enable = true;         # Search functionality (was tracker)
     };
     
-    # Auto login
+    # Auto login - DISABLED temporarily to fix boot issues
     displayManager.autoLogin = {
-      enable = true;
+      enable = false;  # Changed from true to false
       user = "nagih";
     };
     
@@ -118,7 +118,7 @@
 
   # Additional system configuration for GNOME
   # Enable sound with pipewire (better than pulseaudio for GNOME)
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -207,7 +207,7 @@
   # Enable CUPS for printing through GNOME
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;  # Updated from nssmdns
     openFirewall = true;
   };
 

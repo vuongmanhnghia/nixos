@@ -310,56 +310,43 @@
     '';
   };
   
-  # Cài đặt các công cụ hỗ trợ
+  # Common packages - only essential tools
   home.packages = with pkgs; [
-    # LSP servers
+    # LSP servers (development tools)
     nil # Nix LSP
     lua-language-server
     rust-analyzer
     gopls
     nodePackages.typescript-language-server
-    pyright # Đã được tách ra khỏi nodePackages
-    
-    # Development tools
-    tree
-    ripgrep
-    fd
-    bat
-    jq
+    pyright
     
     # Formatters
-    nixfmt-rfc-style # Thay thế nixpkgs-fmt
+    nixfmt-rfc-style
     stylua
     rustfmt
     go # Bao gồm gofmt
     nodePackages.prettier
     black
-
-    # Git tools
-    git-lfs
-    gh
-    # System utilities
-    neofetch
-    unzip
-    zip
     
-    # Fonts for icons
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
+    # Essential Git tools
+    git-lfs
+    
+    # System utilities (minimal set)
+    neofetch
   ];
   
-
-  
-  
-
-  # Common Git configuration
+  # Common Git configuration - consolidated
   programs.git = {
     enable = true;
     extraConfig = {
       init.defaultBranch = "main";
       push.default = "simple";
       pull.rebase = false;
-      core.editor = "vim";
+      core.editor = "nvim";
+      
+      # Better diff handling
+      diff.colorMoved = "default";
+      merge.conflictstyle = "diff3";
     };
   };
 
@@ -411,6 +398,8 @@
       export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
     '';
   };
+  
+  home-manager.backupFileExtension = "backup";
 
   # Common programs
   programs.home-manager.enable = true;

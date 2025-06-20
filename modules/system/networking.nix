@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   networking = {
-    hostName = "nixos";
+    hostName = lib.mkDefault "nixos";
     networkmanager.enable = true;
     
     # Firewall configuration
