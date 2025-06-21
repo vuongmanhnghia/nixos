@@ -11,10 +11,11 @@
       wheelNeedsPassword = true;
     };
     
-    # PAM configuration
+    # PAM configuration - DISABLE U2F for fresh installs
     pam.services = {
-      login.u2fAuth = true;
-      sudo.u2fAuth = true;
+      # Disable U2F until properly configured
+      # login.u2fAuth = true;
+      # sudo.u2fAuth = true;
     };
   };
 

@@ -7,5 +7,6 @@
     ./input-methods.nix
     ./audio.nix
     ./fonts.nix
+    ./gaming.nix
   ];
 }

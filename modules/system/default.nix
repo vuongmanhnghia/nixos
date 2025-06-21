@@ -6,5 +6,8 @@
     ./networking.nix
     ./locale.nix
     ./security.nix
+    ./users.nix
+    ./packages.nix
+    ./firewall.nix
   ];
 }

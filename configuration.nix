@@ -1,4 +1,5 @@
 { config, pkgs, inputs ? {}, ... }:
+
 {
   imports = [
     ./hardware-configuration.nix
@@ -6,6 +7,16 @@
     ./modules/desktop
   ];
   
+  # SSH service configuration
+  programs.ssh.startAgent = true;
+  services.openssh.enable = true;
+    
+  # Enable Nix flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  # System version
+  system.stateVersion = "25.05";
+
   # User accounts
   users.users = {
     nagih = {
@@ -13,49 +24,21 @@
       description = "Nagih";
       extraGroups = [ "networkmanager" "wheel" "docker" "audio" "video" ];
       shell = pkgs.bash;
+      # CRITICAL: Set initial password for first setup
+      initialPassword = "changeme";  # CHANGE THIS AFTER FIRST LOGIN!
     };
-  };
-  
-  # Root user configuration
-  users.users.root = {
-    hashedPassword = "!"; # Disable root login
+    
+    # Root user configuration
+    # CRITICAL: Keep root enabled for emergency access on fresh installs
+    root = {
+      # Allow root login for emergency access during setup
+      initialPassword = "root";  # CHANGE THIS AFTER SETUP!
+      # hashedPassword = "!";  # Enable this ONLY after confirming user access works
+    };
   };
 
   # User groups
   users.groups = {
     docker = {};
   };
-  
-  # System packages
-  environment.systemPackages = with pkgs; [
-    curl
-    wget
-    git
-    openssh
-    htop	# UI monitor
-  ];
-  
-  # Kích hoạt Steam (Neu co su dung steam)
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Mở firewall cho Steam Remote Play
-    dedicatedServer.openFirewall = true; # Mở firewall cho Steam dedicated servers
-  };
-  
-  # Unfree nixpkgs
-  nixpkgs.config.allowUnfree = true;
-  
-  # SSH
-  programs.ssh.startAgent = true;
-  services.openssh.enable = true;
-  
-  # Mở cổng firewall cho Syncthing
-  networking.firewall = {
-    allowedTCPPorts = [ 8384 22000 ];  # GUI và sync
-    allowedUDPPorts = [ 22000 21027 ]; # Sync và discovery
-  };
-    
-  # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.stateVersion = "25.05";
 }

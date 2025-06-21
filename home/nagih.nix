@@ -12,6 +12,13 @@
   programs.git = {
     userName = "Nagih";
     userEmail = "vuongmanhnghia@gmail.com";
+    
+    extraConfig = {
+      init.defaultBranch = "main";
+      push.default = "simple";
+      pull.rebase = false;
+      core.editor = "nvim";
+    };
   };
 
   # User-specific packages
@@ -19,41 +26,43 @@
     # Development
     docker-compose
    
-    # Personal apps
+    # Personal applications
     google-chrome
     discord
     spotify
     code-cursor
     
-    # Steam management
+    # Gaming
     steam
     steam-run
-    protonup-qt # Tool để quản lý Proton versions
-    winetricks   # Tool hỗ trợ Wine/Proton
+    protonup-qt    # Proton version management
+    winetricks     # Wine/Proton support
     
-    # Personal tools
+    # Productivity
     obsidian
     obs-studio
   ];
   
-  # Đồng bộ dữ liệu qua Syncthing
+  # Syncthing configuration
   services.syncthing = {
     enable = true;
     
     settings = {
-      # Cấu hình GUI
+      # GUI configuration
       gui = {
-        address = "127.0.0.1:8384";  # Hoặc "0.0.0.0:8384" để truy cập từ xa
-        user = "Nagih";
-        password = "Vmn.2005"; 
+        address = "127.0.0.1:8384";
+        user = "nagih";
+        # NOTE: Set password via web interface for security
+        # Remove hardcoded password from config
       };
       
       devices = {
-        "laptop" = { id = "YOUR-DEVICE-ID"; };
+        # NOTE: Replace with actual device IDs
+        "laptop" = { id = "LAPTOP-DEVICE-ID-HERE"; };
         "desktop" = { id = "ABLZ4HZ-4LT6U5O-KLDDQO7-WTCX3KQ-CJBPT73-666IPZJ-UALV3FO-GEG5DQU"; };
       };
       
-      # Cấu hình thư mục đồng bộ
+      # Sync folder configuration
       folders = {
         "Documents" = {
           id = "documents";
@@ -62,7 +71,7 @@
           versioning = {
             type = "simple";
             params = {
-              keep = "10";  # Giữ 10 phiên bản cũ
+              keep = "10";  # Keep 10 old versions
             };
           };
         };
@@ -71,8 +80,7 @@
           id = "photos";
           path = "/home/nagih/Pictures/Sync";
           devices = [ "desktop" "laptop" ];
-          # Chỉ nhận file, không gửi
-          type = "receiveonly";
+          type = "receiveonly";  # Only receive, don't send
         };
 
         "Workspaces" = {
@@ -82,7 +90,7 @@
         };
       };
       
-      # Các options khác
+      # Global options
       options = {
         globalAnnounceEnabled = true;
         localAnnounceEnabled = true;
@@ -91,26 +99,25 @@
     };
   };
   
-  # Tạo thư mục cần thiết (nếu chưa tồn tại)
+  # Create necessary directories
   home.activation.createSyncthingDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
     mkdir -p $HOME/Documents
     mkdir -p $HOME/Pictures/Sync
+    mkdir -p $HOME/Workspaces/Dev/vscode-workspaces
   '';
   
-  # Kích hoạt GameMode (tùy chọn, tăng performance)
-  # programs.gamemode.enable = true;
-  
-  # Cấu hình cho node
+  # Development environment
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
 
-  # Custom aliases for this user
+  # User-specific aliases
   programs.bash.shellAliases = {
     dev = "cd ~/Workspaces/Dev";
     web = "cd ~/Workspaces/Dev/Web";
     app = "cd ~/Workspaces/Dev/App";
+    nixconfig = "cd ~/Workspaces/Dev/nixos";
   };
 }
