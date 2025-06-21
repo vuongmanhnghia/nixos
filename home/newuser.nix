@@ -17,17 +17,14 @@
   # User-specific packages
   home.packages = with pkgs; [
     # Different tools for this user
-    firefox
     libreoffice
     gimp
+    firefox
   ];
 
-  # Different shell for this user (optional)
-  programs.zsh = {
-    enable = true;
-    oh-my-zsh = {
-      enable = true;
-      theme = "robbyrussell";
-    };
+  # Additional shell aliases for this user
+  programs.bash.shellAliases = {
+    docs = "cd ~/Documents";
+    pics = "cd ~/Pictures";
   };
 }

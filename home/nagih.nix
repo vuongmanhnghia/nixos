@@ -1,116 +1,89 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./default.nix ];
+  # === IMPORT SHARED CONFIGURATION ===
+  imports = [ 
+    ./default.nix   # Import shared home configuration for all users
+  ];
 
-  # User info
-  home.username = "nagih";
-  home.homeDirectory = "/home/nagih";
-  home.stateVersion = "25.05";
+  # === USER INFORMATION ===
+  home.username = "nagih";            # Username for this configuration
+  home.homeDirectory = "/home/nagih"; # User's home directory path
+  home.stateVersion = "25.05";        # Home Manager version (should match NixOS)
 
-  # User-specific Git config
+  # === USER-SPECIFIC GIT CONFIGURATION ===
   programs.git = {
-    userName = "Nagih";
-    userEmail = "vuongmanhnghia@gmail.com";
+    userName = "Nagih";                    # Git commit author name
+    userEmail = "vuongmanhnghia@gmail.com"; # Git commit author email
   };
 
-  # User-specific packages
+  # === USER-SPECIFIC APPLICATIONS ===
   home.packages = with pkgs; [
-    # Development
-    docker-compose
-   
-    # Personal apps
-    google-chrome
-    discord
-    spotify
-    code-cursor
+    # === PERSONAL PRODUCTIVITY APPLICATIONS ===
+    firefox        # Firefox web browser
+    discord        # Discord chat and communication platform
+    spotify        # Spotify music streaming service
+    code-cursor    # Cursor AI-powered code editor
     
-    # Steam management
-    steam
-    steam-run
-    protonup-qt # Tool để quản lý Proton versions
-    winetricks   # Tool hỗ trợ Wine/Proton
+    # === GAMING APPLICATIONS ===
+    steam          # Steam gaming platform
+    steam-run      # Steam runtime for non-Steam applications
+    protonup-qt    # Proton version management GUI tool
+    winetricks     # Wine/Proton dependency management tool
     
-    # Personal tools
-    obsidian
-    obs-studio
+    # === PRODUCTIVITY AND CONTENT CREATION ===
+    obsidian       # Note-taking and knowledge management application
+    zoom-us
+    obs-studio     # Open Broadcaster Software for streaming and recording
   ];
   
-  # Đồng bộ dữ liệu qua Syncthing
+  # === SYNCTHING FILE SYNCHRONIZATION SERVICE ===
   services.syncthing = {
-    enable = true;
+    enable = true;  # Enable Syncthing file synchronization
     
     settings = {
-      # Cấu hình GUI
+      # === SYNCTHING WEB GUI CONFIGURATION ===
       gui = {
-        address = "127.0.0.1:8384";  # Hoặc "0.0.0.0:8384" để truy cập từ xa
-        user = "Nagih";
-        password = "Vmn.2005"; 
+        address = "127.0.0.1:8384";  # Local web interface address
+        user = "nagih";              # GUI username
       };
       
+      # === DEVICE CONFIGURATION ===
+      # Define other devices for synchronization (replace IDs with actual device IDs)
       devices = {
-        "laptop" = { id = "YOUR-DEVICE-ID"; };
-        "desktop" = { id = "ABLZ4HZ-4LT6U5O-KLDDQO7-WTCX3KQ-CJBPT73-666IPZJ-UALV3FO-GEG5DQU"; };
+        "laptop" = { id = "LAPTOP-DEVICE-ID-REPLACE-ME"; };   # Laptop device
+        "desktop" = { id = "DESKTOP-DEVICE-ID-REPLACE-ME"; }; # Desktop device
       };
       
-      # Cấu hình thư mục đồng bộ
+      # === FOLDER SYNCHRONIZATION CONFIGURATION ===
       folders = {
+        # Synchronize Documents folder across devices
         "Documents" = {
-          id = "documents";
-          path = "/home/nagih/Documents";
-          devices = [ "laptop" "desktop" ];
-          versioning = {
-            type = "simple";
-            params = {
-              keep = "10";  # Giữ 10 phiên bản cũ
-            };
-          };
+          id = "documents";                     # Unique folder identifier
+          path = "/home/nagih/Documents";       # Local folder path
+          devices = [ "laptop" "desktop" ];     # Devices to sync with
         };
         
-        "Photos" = {
-          id = "photos";
-          path = "/home/nagih/Pictures/Sync";
-          devices = [ "desktop" "laptop" ];
-          # Chỉ nhận file, không gửi
-          type = "receiveonly";
-        };
-
+        # Synchronize Workspaces folder for development projects
         "Workspaces" = {
-          id = "workspaces";
-          path = "/home/nagih/Workspaces/Dev/vscode-workspaces";
-          devices = ["desktop" "laptop"];
+          id = "workspaces";                    # Unique folder identifier
+          path = "/home/nagih/Workspaces";      # Local folder path
+          devices = ["desktop" "laptop"];       # Devices to sync with
         };
-      };
-      
-      # Các options khác
-      options = {
-        globalAnnounceEnabled = true;
-        localAnnounceEnabled = true;
-        relaysEnabled = true;
       };
     };
   };
   
-  # Tạo thư mục cần thiết (nếu chưa tồn tại)
-  home.activation.createSyncthingDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
-    mkdir -p $HOME/Documents
-    mkdir -p $HOME/Pictures/Sync
+  # === DIRECTORY CREATION ===
+  # Ensure required directories exist for Syncthing
+  home.activation.createSyncDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p $HOME/Documents   # Create Documents directory if it doesn't exist
+    mkdir -p $HOME/Workspaces  # Create Workspaces directory if it doesn't exist
   '';
-  
-  # Kích hoạt GameMode (tùy chọn, tăng performance)
-  # programs.gamemode.enable = true;
-  
-  # Cấu hình cho node
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
 
-  # Custom aliases for this user
-  programs.bash.shellAliases = {
-    dev = "cd ~/Workspaces/Dev";
-    web = "cd ~/Workspaces/Dev/Web";
-    app = "cd ~/Workspaces/Dev/App";
+  # === USER-SPECIFIC ENVIRONMENT VARIABLES ===
+  home.sessionVariables = {
+    DOWNLOAD_DIR = "${config.home.homeDirectory}/Downloads";  # Downloads directory path
+    DOCUMENTS_DIR = "${config.home.homeDirectory}/Documents"; # Documents directory path
   };
 }

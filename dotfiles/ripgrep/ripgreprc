@@ -1,0 +1,31 @@
+# ~/.config/ripgrep/ripgreprc
+# Configuration for ripgrep (rg) command
+
+# Colors and styling
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=path:fg:green
+--colors=path:style:bold
+--colors=match:fg:black
+--colors=match:bg:yellow
+--colors=match:style:nobold
+
+# Default behavior
+--smart-case
+--hidden
+--follow
+--glob=!.git/*
+--glob=!node_modules/*
+--glob=!.next/*
+--glob=!dist/*
+--glob=!build/*
+--glob=!target/*
+--glob=!*.min.js
+--glob=!*.min.css
+
+# Output formatting
+--max-columns=150
+--max-columns-preview
+
+# Performance
+--mmap 
