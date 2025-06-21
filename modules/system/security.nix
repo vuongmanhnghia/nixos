@@ -11,17 +11,16 @@
       wheelNeedsPassword = true;
     };
     
-    # PAM configuration - DISABLE U2F for fresh installs
-    pam.services = {
-      # Disable U2F until properly configured
-      # login.u2fAuth = true;
-      # sudo.u2fAuth = true;
-    };
+    # PAM configuration - DISABLED U2F for fresh installs
+    # pam.services = {
+    #   login.u2fAuth = true;
+    #   sudo.u2fAuth = true;
+    # };
   };
 
   # Enable automatic security updates
   system.autoUpgrade = {
-    enable = false; # Set to true if you want automatic updates
+    enable = false;
     allowReboot = false;
   };
 }
