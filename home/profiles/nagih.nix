@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
+let
+  secretsLib = import ../../lib/secrets-helper.nix { lib = pkgs.lib; };
+  syncthingConfig = secretsLib.getSyncthingConfig "Nagih";
+in
 {
-  imports = [ ./default.nix ];
+  imports = [ ../common ];
 
   # User info
   home.username = "nagih";
@@ -41,17 +45,11 @@
     enable = true;
     
     settings = {
-      # Cấu hình GUI
-      gui = {
-        address = "127.0.0.1:8384";  # Hoặc "0.0.0.0:8384" để truy cập từ xa
-        user = "Nagih";
-        password = "Vmn.2005"; 
-      };
+      # Cấu hình GUI từ secrets
+      gui = syncthingConfig.gui;
       
-      devices = {
-        "laptop" = { id = "YOUR-DEVICE-ID"; };
-        "desktop" = { id = "ABLZ4HZ-4LT6U5O-KLDDQO7-WTCX3KQ-CJBPT73-666IPZJ-UALV3FO-GEG5DQU"; };
-      };
+      # Device configuration từ secrets
+      devices = syncthingConfig.devices;
       
       # Cấu hình thư mục đồng bộ
       folders = {

@@ -24,7 +24,7 @@
             
             # Multiple users configuration
             home-manager.users = {
-              nagih = import ./home/nagih.nix;
+              nagih = import ./home/profiles/nagih.nix;
             };
             
             # Backup files instead of failing

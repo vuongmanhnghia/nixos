@@ -1,0 +1,25 @@
+# Secrets and sensitive data
+secrets.nix
+
+# Build results
+result
+result-*
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db 

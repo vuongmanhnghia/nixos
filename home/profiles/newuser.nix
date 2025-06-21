@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./default.nix ];
+  imports = [ ../common ];
 
   # User info
   home.username = "newuser";

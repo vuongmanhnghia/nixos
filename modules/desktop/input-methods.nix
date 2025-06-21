@@ -2,7 +2,8 @@
 
 {
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    type = "fcitx5";
+    enable = true;
     fcitx5.addons = with pkgs; [
       fcitx5-unikey
       fcitx5-bamboo
