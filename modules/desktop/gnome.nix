@@ -137,26 +137,6 @@
     };
   };
 
-  # PipeWire for superior audio (better than PulseAudio for modern GNOME)
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    # Optimize for low latency
-    extraConfig.pipewire."92-low-latency" = {
-      context.properties = {
-        default.clock.rate = 48000;
-        default.clock.quantum = 32;
-        default.clock.min-quantum = 32;
-        default.clock.max-quantum = 32;
-      };
-    };
-  };
-
   # Network configuration optimized for GNOME
   networking.networkmanager = {
     enable = true;
@@ -192,44 +172,12 @@
 
   # Modern power management (choose one: either power-profiles-daemon OR tlp)
   services.power-profiles-daemon.enable = true;
-  # services.upower.enable = true;  # Keep upower for battery info
   
-  # TLP disabled to avoid conflict with power-profiles-daemon
-  # For laptops, you can choose TLP instead by commenting power-profiles-daemon above
-  # and uncommenting the TLP configuration below:
-  # services.tlp = {
-  #   enable = true;
-  #   settings = {
-  #     CPU_SCALING_GOVERNOR_ON_AC = "performance";
-  #     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-  #     CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-  #     CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-  #   };
-  # };
-
   # Enable firmware updates through GNOME Software
   services.fwupd.enable = true;
 
   # Enable flatpak for additional app installation
   services.flatpak.enable = true;
-
-  # Modern environment variables for optimal performance
-  environment.sessionVariables = {
-    # Enable Wayland for compatible apps
-    MOZ_ENABLE_WAYLAND = "1";
-    NIXOS_OZONE_WL = "1"; # Electron apps on Wayland
-    
-    # Optimize graphics
-    GDK_SCALE = "1";
-    GDK_DPI_SCALE = "1";
-    
-    # Enable hardware acceleration (Intel by default, NVIDIA module will override)
-    LIBVA_DRIVER_NAME = lib.mkDefault "iHD"; # Intel (will be overridden by NVIDIA if present)
-    
-    # GNOME-specific optimizations
-    GNOME_SHELL_SLOWDOWN_FACTOR = "0.5"; # Faster animations
-    GSK_RENDERER = "ngl"; # New GL renderer for better performance
-  };
 
   # Modern font configuration
   fonts = {
@@ -377,13 +325,6 @@
   # Hardware acceleration for better graphics performance
   hardware.graphics = {
     enable = true;
-    # driSupport = true;  # Removed - no longer needed in modern NixOS
-    # driSupport32Bit = true;  # Removed - no longer needed in modern NixOS
-    extraPackages = with pkgs; [
-      intel-media-driver # Intel VAAPI
-      vaapiIntel         # Intel VA-API
-      vaapiVdpau         # VDPAU backend for VA-API
-      libvdpau-va-gl     # VDPAU driver
-    ];
+    enable32Bit = true;
   };
 }

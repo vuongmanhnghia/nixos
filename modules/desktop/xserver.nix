@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # X11 configuration
+  # === X11 CONFIGURATION - NIXOS 25.05 OPTIMIZED ===
   services.xserver = {
     enable = true;
     
@@ -63,7 +63,7 @@
     '';
   };
 
-  # Libinput configuration (updated for NixOS 25.05)
+  # === LIBINPUT CONFIGURATION ===
   services.libinput = {
     enable = true;
     
@@ -91,59 +91,7 @@
     };
   };
 
-  # Font rendering optimization
-  fonts = {
-    fontconfig = {
-      enable = true;
-      antialias = true;
-      hinting = {
-        enable = true;
-        style = "slight";
-      };
-      subpixel = {
-        lcdfilter = "default";
-        rgba = "rgb";
-      };
-    };
-  };
-
-  # Gaming và multimedia optimization
-  programs.gamemode = {
-    enable = true;
-    settings = {
-      general = {
-        softrealtime = "auto";
-        renice = 10;
-      };
-      gpu = {
-        apply_gpu_optimisations = "accept-responsibility";
-        gpu_device = 0;
-        amd_performance_level = "high";
-      };
-    };
-  };
-
-  # Audio latency optimization (cho gaming)
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    
-    # Low-latency configuration
-    extraConfig.pipewire."92-low-latency" = {
-      context.properties = {
-        default.clock.rate = 48000;
-        default.clock.quantum = 32;
-        default.clock.min-quantum = 32;
-        default.clock.max-quantum = 32;
-      };
-    };
-  };
-
-  # Additional X11 packages
+  # === X11 PACKAGES ===
   environment.systemPackages = with pkgs; [
     # X11 utilities
     xorg.xrandr
@@ -151,27 +99,8 @@
     xorg.xwininfo
     xorg.xprop
     
-    # Gaming utilities
-    gamemode
-    gamescope
-    
     # Performance monitoring
     glxinfo
     mesa-demos
   ];
-
-  # Enable hardware cursors for better performance
-  environment.sessionVariables = {
-    # Cursor theme and size
-    XCURSOR_THEME = "Adwaita";
-    XCURSOR_SIZE = "24";
-    
-    # X11 performance
-    CLUTTER_BACKEND = "x11";
-    
-    # Gaming optimizations
-    __GL_THREADED_OPTIMIZATIONS = "1";
-    __GL_SHADER_DISK_CACHE = "1";
-    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
-  };
 }

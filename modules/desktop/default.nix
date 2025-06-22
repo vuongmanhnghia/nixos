@@ -1,12 +1,32 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./xserver.nix
-    ./nvidia.nix
-    ./gnome.nix
-    ./input-methods.nix
+    # Core environment configuration (must be first)
+    ./environment.nix
+    
+    # Audio system
     ./audio.nix
-    ./fonts.nix
+    
+    # Desktop environments
+    ./gnome.nix
+    ./xserver.nix
+    
+    # Hardware specific
+    ./nvidia.nix
+    
+    # Gaming and entertainment
     ./gaming.nix
+    
+    # Input methods
+    ./input-methods.nix
+    
+    # Font configuration
+    ./fonts.nix
+    
+    # Docker configuration
+    ../system/docker.nix
+    
+    # System optimizations
+    ../system/kernel-optimization.nix
   ];
 }

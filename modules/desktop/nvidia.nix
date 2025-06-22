@@ -45,36 +45,36 @@ in {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
-    # Modesetting bắt buộc cho driver hiện đại
+    # Modesetting bắt buộc cho driver hiện đại và Wayland
     modesetting.enable = true;
 
-    # NVIDIA Open Source Kernel Module
-    # RTX 4060: Nên dùng open = true (Turing architecture trở lên)
-    # RTX 3050 Ti: Có thể dùng open = false cho ổn định
+    # NVIDIA Open Source Kernel Module (NixOS 25.05 improvements)
+    # RTX 4060: Sử dụng open = true (Ada Lovelace architecture)
+    # RTX 3050 Ti: open = false cho ổn định (Ampere architecture)
     open = if isRTX4060 then true else false;
 
-    # Power management - quan trọng cho laptop
+    # Power management - quan trọng cho laptop và Wayland
     powerManagement = {
       enable = true;
-      # Fine-grained power management chỉ cho laptop
+      # Fine-grained power management cho laptop với Wayland
       finegrained = isLaptop;
     };
 
     # Enable nvidia-settings
     nvidiaSettings = true;
 
-    # Driver version selection
+    # Driver version selection - sử dụng stable cho NixOS 25.05
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     
-    # Tắt composition pipeline để giảm input lag (gaming)
+    # Improved Wayland compatibility
     forceFullCompositionPipeline = false;
   };
 
   # PRIME configuration cho laptop (dual GPU)
   hardware.nvidia.prime = lib.mkIf isLaptop {
-    # Sync mode cho hiệu năng tối đa, offload cho tiết kiệm pin
+    # Sync mode cho hiệu năng tối đa với Wayland
     sync.enable = true;
-    # offload.enable = true;  # Uncomment để dùng offload mode
+    # offload.enable = true;  # Uncomment để dùng offload mode cho battery life
     
     # Bus ID - cần kiểm tra bằng: lspci | grep -E "(VGA|3D)"
     # Mặc định cho laptop Intel + NVIDIA phổ biến
@@ -82,65 +82,38 @@ in {
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  # Kernel modules và parameters
+  # Kernel modules và parameters - NixOS 25.05 optimized
   boot = {
     kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
     blacklistedKernelModules = [ "nouveau" ];
     
     kernelParams = [
-      # Preserve video memory allocations
+      # Preserve video memory allocations for better suspend/resume
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
       
-      # Enable DRM kernel mode setting
+      # Enable DRM kernel mode setting (essential for Wayland)
       "nvidia-drm.modeset=1"
+      
+      # Wayland-specific optimizations
+      "nvidia.NVreg_EnableGpuFirmware=1"
       
       # Laptop specific: Disable Intel GPU nếu chỉ muốn dùng NVIDIA
       # "module_blacklist=i915"  # Uncomment nếu cần
     ] ++ lib.optionals isLaptop [
-      # Laptop power management
+      # Laptop power management with Wayland
       "nvidia.NVreg_DynamicPowerManagement=0x02"
     ];
     
     extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   };
 
-  # Environment variables cho Wayland/X11 compatibility
-  environment.sessionVariables = {
-    # NVIDIA Wayland support
-    GBM_BACKEND = "nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    
-    # Hardware video acceleration
-    LIBVA_DRIVER_NAME = "nvidia";
-    
-    # Vulkan
-    VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
-    
-    # Variable refresh rate support
-    __GL_VRR_ALLOWED = "1";
-    
-    # Wayland cursors fix
-    WLR_NO_HARDWARE_CURSORS = "1";
-    
-    # NVIDIA power management
-    __GL_MaxFramesAllowed = "1";
-  } // lib.optionalAttrs isLaptop {
-    # Laptop specific environment
-    NVIDIA_POWER_LIMIT = "1";
-    __GL_SYNC_DISPLAY_DEVICE = "DP-1-1";
-  };
-
-  # System packages
+  # System packages - removed duplicates, optimized for NixOS 25.05
   environment.systemPackages = with pkgs; [
     # NVIDIA utilities
     nvidia-container-toolkit
     
     # Development tools
     cudatoolkit
-    
-    # Vulkan tools
-    vulkan-tools
-    vulkan-loader
     
     # OpenCL
     ocl-icd
@@ -155,14 +128,14 @@ in {
 
   # Udev rules cho NVIDIA power management
   services.udev.extraRules = lib.optionalString isLaptop ''
-    # NVIDIA power management
+    # NVIDIA power management for laptops
     SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", ATTR{power/control}="auto"
     SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", ATTR{power/control}="auto"
   '';
 
-  # Systemd services cho NVIDIA
+  # Systemd services cho NVIDIA với Wayland support
   systemd.services = {
-    # NVIDIA suspend/resume support
+    # NVIDIA suspend/resume support for Wayland
     nvidia-suspend = lib.mkIf isLaptop {
       description = "NVIDIA system suspend actions";
       unitConfig.RequiresMountsFor = "/sys";
@@ -186,7 +159,7 @@ in {
     };
   };
 
-  # Specialisation cho gaming vs power saving
+  # Specialisation cho gaming vs power saving (laptop only)
   specialisation = lib.mkIf isLaptop {
     gaming = {
       inheritParentConfig = true;

@@ -27,9 +27,6 @@
 
   # User-specific packages (additional to GNOME packages)
   home.packages = with pkgs; [
-    # Development
-    docker-compose
-   
     # Personal applications
     google-chrome
     discord
@@ -138,11 +135,77 @@
     tmk = "tmux kill-session -t";
     tmux-helper = "bash ~/Workspaces/Config/nixos/home/tmux-helper.sh";
     th = "bash ~/Workspaces/Config/nixos/home/tmux-helper.sh";  # Short alias
+    
+    # VSCode launcher alias
+    vscode = "vscode-launcher";
   };
   
   # Add tmux helper script to PATH
   home.file.".local/bin/tmux-helper" = {
     source = ./tmux-helper.sh;
     executable = true;
+  };
+
+  # Add vscode-launcher script to fix VSCode issues
+  home.file.".local/bin/vscode-launcher" = {
+    text = ''
+      #!/bin/bash
+      # Clear LD_LIBRARY_PATH to avoid conflicts with Cursor libraries
+      # Force X11 backend (already set in sessionVariables but ensuring here)
+      env \
+        LD_LIBRARY_PATH="" \
+        ELECTRON_FORCE_IS_PACKAGED="true" \
+        ELECTRON_NO_ATTACH_CONSOLE="1" \
+        ${pkgs.vscode}/bin/code \
+        --no-sandbox \
+        --disable-gpu-sandbox \
+        --disable-dev-shm-usage \
+        "$@"
+    '';
+    executable = true;
+  };
+
+  # Add convenient vscode-open script
+  home.file.".local/bin/vscode-open" = {
+    text = ''
+      #!/bin/bash
+      # Convenient script to open VSCode with proper environment
+      echo "Opening VSCode..."
+      
+      # Ensure proper environment
+      export NIXOS_OZONE_WL="0"
+      export GDK_BACKEND="x11"
+      export QT_QPA_PLATFORM="xcb"
+      export LD_LIBRARY_PATH=""
+      
+      # Launch VSCode
+      exec ${pkgs.vscode}/bin/code \
+        --no-sandbox \
+        --disable-gpu-sandbox \
+        --disable-dev-shm-usage \
+        "$@"
+    '';
+    executable = true;
+  };
+
+  # Environment variables - removed conflicts, kept user-specific only
+  home.sessionVariables = {
+    # Personal development settings
+    EDITOR = "nvim";
+    BROWSER = "google-chrome";
+    TERMINAL = "gnome-terminal";
+    
+    # Personal directories
+    DOWNLOAD_DIR = "${config.home.homeDirectory}/Downloads";
+    DOCUMENTS_DIR = "${config.home.homeDirectory}/Documents";
+    
+    # Development environment
+    NODE_OPTIONS = "--max-old-space-size=8192";
+    PNPM_HOME = "${config.home.homeDirectory}/.pnpm";
+    CARGO_HOME = "${config.home.homeDirectory}/.cargo";
+    
+    # Personal productivity
+    OBSIDIAN_USE_WAYLAND = "1";
+    ANKI_WAYLAND = "1";
   };
 }
