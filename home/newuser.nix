@@ -17,7 +17,6 @@
   # User-specific packages
   home.packages = with pkgs; [
     # Different tools for this user
-    firefox
     libreoffice
     gimp
   ];

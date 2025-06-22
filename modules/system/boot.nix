@@ -18,7 +18,7 @@
       };
       
       # Tự động chọn entry mặc định sau timeout
-      timeout = 3;  # 3 giây (hoặc null để chờ vô hạn) 
+      timeout = 5;  # 5 giây (hoặc null để chờ vô hạn) 
       
       efi = {
         canTouchEfiVariables = true;

@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./default.nix ];
+  imports = [ 
+    ./default.nix 
+    ./gnome-user-config.nix  # Import GNOME user configurations
+  ];
 
   # User info
   home.username = "nagih";
@@ -21,7 +24,7 @@
     };
   };
 
-  # User-specific packages
+  # User-specific packages (additional to GNOME packages)
   home.packages = with pkgs; [
     # Development
     docker-compose
@@ -113,11 +116,18 @@
     nix-direnv.enable = true;
   };
 
-  # User-specific aliases
+  # User-specific aliases for development workflow
   programs.bash.shellAliases = {
-    dev = "cd ~/Workspaces/Dev";
+    workspaces = "cd ~/Workspaces";
     web = "cd ~/Workspaces/Dev/Web";
     app = "cd ~/Workspaces/Dev/App";
-    nixconfig = "cd ~/Workspaces/Dev/nixos";
+    nixconfig = "cd ~/Workspaces/config/nixos";
+    
+    # GNOME-specific aliases
+    gnome-reset = "dconf reset -f /org/gnome/";
+    gnome-backup = "dconf dump /org/gnome/ > ~/gnome-settings-backup.txt";
+    gnome-restore = "dconf load /org/gnome/ < ~/gnome-settings-backup.txt";
+    extensions-list = "gnome-extensions list";
+    extensions-prefs = "gnome-extensions prefs";
   };
 }

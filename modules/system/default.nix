@@ -5,7 +5,7 @@
     ./boot.nix
     ./networking.nix
     ./locale.nix
-    ./security.nix
+    # ./security.nix
     ./users.nix
     ./packages.nix
     ./firewall.nix

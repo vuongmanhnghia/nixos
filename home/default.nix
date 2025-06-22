@@ -10,7 +10,6 @@
   home.packages = with pkgs; [
     # Development essentials
     python3
-    rustc
     
     # Development tools
     docker
@@ -19,8 +18,8 @@
     # Terminal utilities
     ripgrep
     fd
+    eza
     bat
-    exa
     fzf
     tree
     unzip
@@ -44,15 +43,18 @@
     
     # Common aliases
     shellAliases = {
-      ll = "exa -la";
-      la = "exa -a";
-      ls = "exa";
+      ll = "eza -l";
+      la = "eza -la";
+      ls = "eza";
       grep = "rg";
       cat = "bat";
       ".." = "cd ..";
       "..." = "cd ../..";
-      nixos-rebuild = "sudo nixos-rebuild switch --flake .";
-      home-rebuild = "home-manager switch --flake .";
+      cls = "clear";
+
+      config = "cd /etc/nixos";
+      nixos-rebuild = "sudo nixos-rebuild switch --flake /etc/nixos";
+      home-rebuild = "home-manager switch --flake /etc/nixos";
     };
     
     # Bash prompt customization
@@ -85,7 +87,6 @@
     extraConfig = ''
       Host *
         AddKeysToAgent yes
-        UseKeychain yes
     '';
   };
 
