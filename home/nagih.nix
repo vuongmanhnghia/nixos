@@ -4,6 +4,7 @@
   imports = [ 
     ./default.nix 
     ./gnome-user-config.nix  # Import GNOME user configurations
+    ./tmux.nix              # Import tmux configuration
   ];
 
   # User info
@@ -129,5 +130,19 @@
     gnome-restore = "dconf load /org/gnome/ < ~/gnome-settings-backup.txt";
     extensions-list = "gnome-extensions list";
     extensions-prefs = "gnome-extensions prefs";
+    
+    # Tmux aliases
+    tm = "tmux";
+    tma = "tmux attach";
+    tms = "tmux list-sessions";
+    tmk = "tmux kill-session -t";
+    tmux-helper = "bash ~/Workspaces/Config/nixos/home/tmux-helper.sh";
+    th = "bash ~/Workspaces/Config/nixos/home/tmux-helper.sh";  # Short alias
+  };
+  
+  # Add tmux helper script to PATH
+  home.file.".local/bin/tmux-helper" = {
+    source = ./tmux-helper.sh;
+    executable = true;
   };
 }
