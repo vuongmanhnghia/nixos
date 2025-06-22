@@ -14,7 +14,7 @@
       # Theme settings
       gtk-theme = "Adwaita";
       icon-theme = "Papirus-Dark";
-      cursor-theme = "Bibata-Modern-Ice";
+      # cursor-theme = "Bibata-Modern-Ice";  # Removed to use default cursor
       
       # Font settings
       font-name = "Inter 11";
@@ -177,11 +177,11 @@
       package = pkgs.papirus-icon-theme;
     };
     
-    cursorTheme = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
-      size = 24;
-    };
+    # cursorTheme = {                      # Removed to use default cursor
+    #   name = "Bibata-Modern-Ice";
+    #   package = pkgs.bibata-cursors;
+    #   size = 24;
+    # };
     
     font = {
       name = "Inter";
@@ -212,7 +212,7 @@
     
     # Theme packages
     papirus-icon-theme
-    bibata-cursors
+    # bibata-cursors                       # Removed to use default cursor
     
     # Core development tools
     git
