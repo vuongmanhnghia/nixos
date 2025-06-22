@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
-  # === AUDIO CONFIGURATION - NIXOS 25.05 OPTIMIZED ===
+  # === AUDIO CONFIGURATION - NIXOS 25.05 OPTIMIZED & FIXED ===
   
-  # Disable conflicting audio systems
+  # Disable conflicting audio systems (sound.enable removed - no longer supported)
   services.pulseaudio.enable = false;
   
   # Enable realtime scheduling for audio
@@ -36,29 +36,8 @@
         "log.level" = 2;  # 0=off, 1=error, 2=warn, 3=info, 4=debug, 5=trace
       };
       
-      "context.modules" = [
-        {
-          name = "libpipewire-module-rtkit";
-          args = {
-            "nice.level" = -15;
-            "rt.prio" = 88;
-            "rt.time.soft" = 200000;
-            "rt.time.hard" = 200000;
-          };
-        }
-        {
-          name = "libpipewire-module-protocol-native";
-        }
-        {
-          name = "libpipewire-module-client-node";
-        }
-        {
-          name = "libpipewire-module-adapter";
-        }
-        {
-          name = "libpipewire-module-link-factory";
-        }
-      ];
+      # Remove context.modules section - let PipeWire load its default modules
+      # This prevents conflicts with modules that are already loaded
     };
     
     # WirePlumber configuration for session management
@@ -78,6 +57,26 @@
             actions = {
               update-props = {
                 "session.suspend-timeout-seconds" = 0;
+              };
+            };
+          }
+        ];
+      };
+
+      # Hardware detection and automatic configuration
+      extraConfig."50-hardware-detection" = {
+        "monitor.alsa.rules" = [
+          {
+            matches = [
+              { "device.name" = "~alsa_card.*"; }
+            ];
+            actions = {
+              update-props = {
+                # Enable all available profiles
+                "api.alsa.use-acp" = true;
+                "api.alsa.ignore-dB" = false;
+                # Proper device detection
+                "device.profile-set" = "default.conf";
               };
             };
           }
@@ -106,7 +105,33 @@
     
     # System audio info
     inxi               # System information (includes audio)
+    
+    # Additional audio utilities for troubleshooting
+    sox                 # Sound processing
+    ffmpeg             # Audio/video processing
   ];
+
+  # === HARDWARE SUPPORT ===
+  # Enable sound hardware detection
+  hardware = {
+    # Enable all audio hardware
+    graphics.enable = true;  # For HDMI audio
+    
+    # USB audio support
+    usb-modeswitch.enable = true;
+    
+    # Bluetooth audio support
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
+      };
+    };
+  };
 
   # === UDEV RULES FOR AUDIO DEVICES ===
   services.udev.extraRules = ''
@@ -116,11 +141,17 @@
     
     # USB audio device rules for better performance
     SUBSYSTEM=="usb", ATTRS{idVendor}=="*", ATTRS{idProduct}=="*", ATTRS{bInterfaceClass}=="01", GROUP="audio"
+    
+    # Real-time priority for audio devices
+    KERNEL=="rtc0", GROUP="audio", MODE="0664"
+    
+    # Allow audio group to access timer
+    KERNEL=="timer", GROUP="audio", MODE="0664"
   '';
 
   # === USER GROUPS ===
   # Ensure user has proper audio permissions
-  users.users.nagih.extraGroups = [ "audio" "pipewire" ];
+  users.users.nagih.extraGroups = [ "audio" "pipewire" "rtkit" ];
 
   # === ENVIRONMENT VARIABLES ===
   # Audio-specific environment variables
@@ -135,23 +166,48 @@
     JACK_DEFAULT_SERVER = "pipewire";
   };
 
-  # === SYSTEMD SERVICE OPTIMIZATIONS ===
+  # === SYSTEMD SERVICE OPTIMIZATIONS - FIXED ===
+  # Remove problematic IOScheduling settings that cause IOPRIO errors
+  # Instead use nice values and proper resource management
+  
   systemd.user.services.pipewire.serviceConfig = {
-    # Ensure PipeWire runs with high priority
+    # Use nice instead of IOScheduling to avoid IOPRIO errors
     Nice = -15;
-    IOSchedulingClass = 1;  # Real-time I/O scheduling
-    IOSchedulingPriority = 4;
+    # Remove IOSchedulingClass and IOSchedulingPriority to fix the error
+    # IOSchedulingClass = 1;  # REMOVED - This causes IOPRIO errors
+    # IOSchedulingPriority = 4;  # REMOVED - This causes IOPRIO errors
+    
+    # Resource limits
+    LimitRTPRIO = 95;
+    LimitMEMLOCK = "infinity";
   };
 
   systemd.user.services.pipewire-pulse.serviceConfig = {
     Nice = -15;
-    IOSchedulingClass = 1;
-    IOSchedulingPriority = 4;
+    # Remove IOScheduling settings
+    LimitRTPRIO = 95;
+    LimitMEMLOCK = "infinity";
   };
 
   systemd.user.services.wireplumber.serviceConfig = {
     Nice = -10;
-    IOSchedulingClass = 1;
-    IOSchedulingPriority = 6;
+    # Remove IOScheduling settings
+    LimitRTPRIO = 85;
+    LimitMEMLOCK = "infinity";
   };
+
+  # === BOOT MODULES FOR AUDIO ===
+  boot.kernelModules = [
+    "snd-seq"
+    "snd-rawmidi"
+    "snd-hda-intel"
+    "snd-usb-audio"
+  ];
+
+  # === ADDITIONAL SYSTEM CONFIGURATION ===
+  # Enable dbus for proper audio session management
+  services.dbus.enable = true;
+  
+  # Ensure proper XDG runtime directory
+  security.pam.services.login.enableGnomeKeyring = true;
 }
