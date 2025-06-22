@@ -88,7 +88,7 @@
 
         "Workspaces" = {
           id = "workspaces";
-          path = "/home/nagih/Workspaces/Dev/vscode-workspaces";
+          path = "/home/nagih/Workspaces/workspaces";
           devices = ["desktop" "laptop"];
         };
       };
@@ -106,7 +106,7 @@
   home.activation.createSyncthingDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
     mkdir -p $HOME/Documents
     mkdir -p $HOME/Pictures/Sync
-    mkdir -p $HOME/Workspaces/Dev/vscode-workspaces
+    mkdir -p $HOME/Workspaces/workspaces
   '';
   
   # Development environment
