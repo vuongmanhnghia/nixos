@@ -18,8 +18,9 @@
       gcp = "git cherry-pick";   # Quick git cherry-pick
       
       # === SYSTEM MANAGEMENT SHORTCUTS ===
-      nixos-rebuild = "sudo nixos-rebuild switch --flake .";  # Rebuild NixOS system
-      home-rebuild = "home-manager switch --flake .";         # Rebuild Home Manager config
+      config = "cd /etc/nixos";
+      nixos-rebuild = "sudo nixos-rebuild switch --flake /etc/nixos";  # Rebuild NixOS system
+      home-rebuild = "home-manager switch --flake /etc/nixos";         # Rebuild Home Manager config
       
       # === DEVELOPMENT NAVIGATION ===
       dev = "cd ~/Workspaces/Dev";              # Navigate to development directory
