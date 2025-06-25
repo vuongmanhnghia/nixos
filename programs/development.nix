@@ -28,7 +28,6 @@
     
     # === CODE EDITORS AND IDEs ===
     neovim   # Modern Vim-based text editor with LSP support
-    vscode   # Visual Studio Code editor
     
     # === TERMINAL MULTIPLEXER AND UTILITIES ===
     tmux     # Terminal multiplexer for managing multiple terminal sessions

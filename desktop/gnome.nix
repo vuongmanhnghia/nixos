@@ -68,6 +68,24 @@
     # === ESSENTIAL SYSTEM UTILITIES ===
     htop                      # Enhanced system monitor
     neofetch                  # System information display with ASCII art
+    
+    # === X11 FALLBACK APP LAUNCHERS ===
+    # Simple commands for apps that work better with X11
+    (writeShellScriptBin "cursor-x11" ''
+      #!/usr/bin/env bash
+      # Launch Cursor with X11 backend silently
+      unset NIXOS_OZONE_WL
+      exec env ELECTRON_OZONE_PLATFORM_HINT=x11 cursor "$@" >/dev/null 2>&1 &
+      disown
+    '')
+    
+    (writeShellScriptBin "discord-x11" ''
+      #!/usr/bin/env bash
+      # Launch Discord with X11 backend silently
+      unset NIXOS_OZONE_WL
+      exec env ELECTRON_OZONE_PLATFORM_HINT=x11 discord "$@" >/dev/null 2>&1 &
+      disown
+    '')
   ];
 
   # === EXCLUDED DEFAULT APPLICATIONS ===
@@ -641,5 +659,36 @@
 
   # === ENHANCED FLATPAK INTEGRATION ===
   environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+  
+  # === X11 FALLBACK DESKTOP ENTRIES ===
+  # For apps that have issues with Wayland
+  environment.etc = {
+    "xdg/applications/cursor-x11.desktop".text = ''
+      [Desktop Entry]
+      Name=Cursor (X11)
+      Comment=AI-powered code editor with X11 support (stable)
+      GenericName=Code Editor
+      Exec=env -u NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT=x11 cursor %F
+      Icon=cursor
+      Type=Application
+      StartupNotify=true
+      Categories=Development;TextEditor;Utility;
+      MimeType=text/plain;inode/directory;
+      Keywords=cursor;x11;editor;code;stable;
+    '';
+    
+    "xdg/applications/discord-x11.desktop".text = ''
+      [Desktop Entry]
+      Name=Discord (X11)
+      StartupWMClass=discord
+      Comment=All-in-one voice and text chat with X11 support (stable)
+      GenericName=Internet Messenger
+      Exec=env -u NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT=x11 discord
+      Icon=discord
+      Type=Application
+      Categories=Network;InstantMessaging;
+      Keywords=discord;x11;chat;gaming;stable;
+    '';
+  };
 }
 

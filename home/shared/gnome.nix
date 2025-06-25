@@ -24,12 +24,7 @@
     # Shell favorites
     "org/gnome/shell" = {
       enable-hot-corners = false;
-      favorite-apps = [
-        "org.gnome.Nautilus.desktop"
-        "org.gnome.Terminal.desktop"
-        "code.desktop"
-        "org.gnome.Settings.desktop"
-      ];
+      favorite-apps = [ ];
     };
 
     # Essential keybindings
