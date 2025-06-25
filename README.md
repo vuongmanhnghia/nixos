@@ -1,156 +1,159 @@
-# NixOS Configuration
+# NixOS Configuration - Simplified & Optimized
 
-A clean, modular NixOS configuration optimized for development and desktop use.
+Cấu hình NixOS được tối ưu hóa, đơn giản và dễ maintain cho development và desktop.
 
-## 📁 Structure
+## 📁 Cấu trúc
 
 ```
-├── configuration.nix          # Main system configuration
-├── hardware-configuration.nix # Hardware-specific settings
-├── flake.nix                 # Flake configuration with inputs
+nixos-config/
+├── flake.nix                    # Core flake configuration
+├── configuration.nix            # Main system config
+├── hardware-configuration.nix   # Hardware-specific settings
 │
-├── modules/
-│   ├── system/               # System-level configurations
-│   │   ├── default.nix       # System module imports
-│   │   ├── users.nix         # User accounts and groups
-│   │   ├── packages.nix      # System packages
-│   │   ├── firewall.nix      # Firewall rules
-│   │   ├── boot.nix          # Boot configuration
-│   │   ├── networking.nix    # Network settings
-│   │   ├── locale.nix        # Locale and timezone
-│   │   └── security.nix      # Security settings
-│   │
-│   └── desktop/              # Desktop environment configurations
-│       ├── default.nix       # Desktop module imports
-│       ├── gaming.nix        # Steam and gaming setup
-│       ├── gnome.nix         # GNOME desktop environment
-│       ├── xserver.nix       # X11 configuration
-│       ├── nvidia.nix        # NVIDIA drivers
-│       ├── audio.nix         # Audio configuration
-│       ├── fonts.nix         # System fonts
-│       └── input-methods.nix # Input methods
+├── system/                      # System-level configurations
+│   ├── default.nix             # System imports
+│   ├── boot.nix                # Boot configuration
+│   ├── users.nix               # User management
+│   ├── networking.nix          # Network basics
+│   ├── locale.nix              # Timezone & language
+│   ├── packages.nix            # Essential system packages
+│   └── security.nix            # Basic security settings
 │
-└── home/                     # Home Manager configurations
-    ├── default.nix           # Common home configuration
-    ├── nagih.nix            # User-specific configuration
-    ├── newuser.nix          # Template for new users
-    │
-    └── editors/              # Editor configurations
-        └── neovim.nix        # Neovim setup with plugins
+├── desktop/                     # Desktop environment
+│   ├── default.nix             # Desktop imports
+│   ├── gnome.nix               # GNOME desktop
+│   ├── audio.nix               # PipeWire audio
+│   ├── graphics.nix            # NVIDIA graphics (latest)
+│   └── fonts.nix               # System fonts
+│
+├── programs/                    # Application configurations
+│   ├── default.nix             # Program imports
+│   ├── development.nix         # Dev tools & Docker
+│   ├── gaming.nix              # Gaming (Steam, GameMode)
+│   └── multimedia.nix          # Media apps & Vietnamese input
+│
+└── home/                        # Home Manager configurations
+    ├── default.nix             # Common home config (imports all shared)
+    ├── nagih.nix               # User-specific config
+    ├── newuser.nix             # Template for new users
+    └── shared/                 # Shared configurations
+        ├── git.nix             # Git configuration
+        ├── shell.nix           # Bash & aliases
+        ├── tmux.nix            # Tmux configuration (simplified)
+        ├── gnome.nix           # GNOME user settings (simplified)
+        └── editors/            # Editor configs
+            └── neovim.nix      # Neovim setup
 ```
 
-## 🚀 Usage
+## 🚀 Sử dụng
 
-### System Rebuild
+### Rebuild System
 
 ```bash
 sudo nixos-rebuild switch --flake .
 ```
 
-### Home Manager Rebuild
+### Rebuild Home Manager
 
 ```bash
 home-manager switch --flake .
 ```
 
-### Quick Aliases (available after rebuild)
+### Quick Commands
 
 ```bash
-nixos-rebuild    # System rebuild shortcut
-home-rebuild     # Home Manager rebuild shortcut
-dev             # cd ~/Workspaces/Dev
-nixconfig       # cd to this config directory
+nixos-rebuild    # System rebuild
+home-rebuild     # Home Manager rebuild
+dev              # cd ~/Workspaces/Dev
+nixconfig        # cd to config directory
 ```
 
-## ⚙️ Features
+## ✨ Tính năng
 
-### System Configuration
+### System
 
--  **Modular design**: Each component is separated into logical modules
--  **User management**: Clean user and group configuration
--  **Security**: Proper firewall rules and security settings
--  **Gaming ready**: Steam and gaming tools configured
--  **Development tools**: Docker, Git, and essential dev packages
+-  ✅ **Modular design** - Dễ extend và maintain
+-  ✅ **NVIDIA latest driver** - Stable và performance
+-  ✅ **PipeWire audio** - Low latency (0.67ms)
+-  ✅ **Gaming support** - Steam, GameMode
+-  ✅ **Development tools** - Docker, Git, modern CLI tools
 
 ### Home Manager
 
--  **Neovim**: Fully configured with LSP, completion, and modern keybindings
--  **Development environment**: Node.js, Python, Rust, Go toolchains
--  **Syncthing**: File synchronization (configure device IDs)
--  **Modern shell**: Bash with useful aliases and prompt
--  **Terminal tools**: ripgrep, fd, bat, exa, and more
+-  ✅ **Neovim** - LSP và modern keybindings
+-  ✅ **Modern shell** - Bash với aliases hữu ích
+-  ✅ **Syncthing** - File synchronization
+-  ✅ **GNOME** - Desktop environment tối ưu
 
-### Editor (Neovim)
+### Gaming
 
--  **LSP support**: Language servers for major languages
--  **Modern keybindings**: Familiar Ctrl+C/V/A shortcuts
--  **Rich plugins**: File explorer, fuzzy finder, Git integration
--  **Multiple colorschemes**: Tokyo Night and Catppuccin
+-  ✅ **Steam** - Native Wayland support
+-  ✅ **GameMode** - Performance optimization
+-  ✅ **Controller support** - PS4/PS5, Xbox, Nintendo
 
-## 🛡️ Security Notes
+## 🔧 Customization
 
--  Root login is disabled
--  SSH agent configured properly
--  Syncthing password should be set via web interface (not hardcoded)
--  Replace device IDs in `home/nagih.nix` with actual device IDs
+### Thêm System Packages
 
-## 🔧 Adding New Users
+Edit `system/packages.nix`
 
-1. Copy `home/newuser.nix` to `home/username.nix`
-2. Update the user configuration
-3. Add to `flake.nix` home-manager users section
-4. Add user to `modules/system/users.nix`
+### Thêm User Packages
 
-## 🎨 Customization
-
-### Adding System Packages
-
-Add to `modules/system/packages.nix`
-
-### Adding User Packages
-
-Add to specific user files in `home/`
-
-### Desktop Environment Changes
-
-Modify files in `modules/desktop/`
+Edit `home/nagih.nix` hoặc `home/default.nix`
 
 ### Gaming Configuration
 
-Edit `modules/desktop/gaming.nix`
+Edit `programs/gaming.nix`
 
-This configuration follows NixOS best practices and is designed for easy maintenance and extension.
+### Desktop Changes
 
-### AFTER BUILD SUSSCESS
+Edit files trong `desktop/`
 
-{ config, pkgs, ... }:
+## 🛡️ Security Notes
 
-{
+-  Root login disabled
+-  SSH key authentication only
+-  Firewall enabled với ports cần thiết
+-  Syncthing chạy local only
 
-# User accounts
+## 🆕 Adding New Users
 
-users.users = {
-nagih = {
-isNormalUser = true;
-description = "Nagih";
-extraGroups = [ "networkmanager" "wheel" "docker" "audio" "video" ];
-shell = pkgs.bash; # CRITICAL: Set initial password for first setup
-initialPassword = "changeme"; # CHANGE THIS AFTER FIRST LOGIN!
-};
+1. Copy `home/nagih.nix` thành `home/username.nix`
+2. Update user config
+3. Add vào `flake.nix` home-manager users section
+4. Add user vào `system/users.nix`
 
-    # Root user configuration
-    # CRITICAL: Keep root enabled for emergency access on fresh installs
-    root = {
-      # Allow root login for emergency access during setup
-      initialPassword = "root";  # CHANGE THIS AFTER SETUP!
-      # hashedPassword = "!";  # Enable this ONLY after confirming user access works
-    };
+## 📦 Syncthing Alternative
 
-};
+### Current: Syncthing
 
-# User groups
+-  ✅ P2P, no cloud dependency
+-  ✅ End-to-end encryption
+-  ❌ No web interface for file management
 
-users.groups = {
-docker = {};
-};
-}
+### Alternative: Nextcloud (Recommended)
+
+```nix
+# Add to programs/multimedia.nix
+services.nextcloud-client.enable = true;
+```
+
+**Lợi ích:**
+
+-  🌐 Web interface
+-  📱 Mobile apps tốt hơn
+-  🔒 Better permission control
+-  📊 Activity monitoring
+-  🔄 Version history with web UI
+
+**Setup Nextcloud:**
+
+1. Tạo account trên Nextcloud provider
+2. Install Nextcloud desktop client
+3. Sync folders tương tự Syncthing
+
+Bạn có muốn tôi thay Syncthing bằng Nextcloud không?
+
+---
+
+_Configuration simplified từ complex setup, giữ lại functionality cần thiết_

@@ -1,95 +1,51 @@
 { config, pkgs, ... }:
 
 {
-  # Import editor configurations
+  # === SHARED HOME MANAGER CONFIGURATIONS ===
+  # Import common configurations used by all users
   imports = [
-    ./editors/neovim.nix
+    ./shared/git.nix             # Git version control configuration
+    ./shared/shell.nix           # Bash shell with aliases and modern CLI tools
+    ./shared/tmux.nix            # Terminal multiplexer configuration
+    ./shared/gnome.nix           # GNOME desktop user settings and themes
+    ./shared/editors/neovim.nix  # Neovim editor configuration with LSP
   ];
 
-  # Essential development tools
+  # === ESSENTIAL PACKAGES FOR ALL USERS ===
   home.packages = with pkgs; [
-    # Development essentials
-    python3
+    # === DEVELOPMENT ESSENTIALS ===
+    python3    # Python 3 interpreter for scripting and development
     
-    # Development tools
-    docker
-    git
+    # === MODERN TERMINAL UTILITIES ===
+    ripgrep    # Fast text search tool (better grep replacement)
+    fd         # Fast and user-friendly alternative to find
+    eza        # Modern ls replacement with better formatting and colors
+    bat        # Syntax-highlighted cat replacement with paging
+    fzf        # Fuzzy finder for files, commands, and history
+    tree       # Display directory structures in tree format
+    unzip      # Extract ZIP archives
+    zip        # Create ZIP archives
     
-    # Terminal utilities
-    ripgrep
-    fd
-    eza
-    bat
-    fzf
-    tree
-    unzip
-    zip
+    # === SYSTEM MONITORING UTILITIES ===
+    neofetch   # System information display tool with ASCII art
+    btop       # Modern system monitor with better interface than htop
+    htop       # Interactive process viewer and system monitor
     
-    # System utilities
-    neofetch
-    btop
+    # === WAYLAND CLIPBOARD UTILITIES ===
+    wl-clipboard  # Wayland clipboard utilities (wl-copy, wl-paste)
   ];
 
-  # Git configuration (global defaults)
-  programs.git = {
-    enable = true;
-    # User-specific config will be overridden in user files
-  };
-
-  # Bash configuration
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    
-    # Common aliases
-    shellAliases = {
-      ll = "eza -l";
-      la = "eza -la";
-      ls = "eza";
-      grep = "rg";
-      cat = "bat";
-      ".." = "cd ..";
-      "..." = "cd ../..";
-      cls = "clear";
-
-      config = "cd /etc/nixos";
-      nixos-rebuild = "sudo nixos-rebuild switch --flake /etc/nixos";
-      home-rebuild = "home-manager switch --flake /etc/nixos";
-    };
-    
-    # Bash prompt customization
-    bashrcExtra = ''
-      # Custom prompt
-      export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-      
-      # History settings
-      export HISTSIZE=10000
-      export HISTFILESIZE=10000
-      export HISTCONTROL=ignoredups:erasedups
-      
-      # Make history append, not overwrite
-      shopt -s histappend
-    '';
-  };
-
-  # Development environment
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  # SSH configuration
+  # === SSH CONFIGURATION ===
   programs.ssh = {
-    enable = true;
+    enable = true;  # Enable SSH client
     
-    # Common SSH settings
+    # SSH agent configuration for key management
     extraConfig = ''
       Host *
-        AddKeysToAgent yes
+        AddKeysToAgent yes  # Automatically add SSH keys to agent
     '';
   };
 
-  # Home Manager version
-  home.stateVersion = "25.05";
+  # === HOME MANAGER VERSION ===
+  home.stateVersion = "25.05";  # Should match your NixOS release version
 }

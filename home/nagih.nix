@@ -1,211 +1,104 @@
 { config, pkgs, ... }:
 
 {
+  # === IMPORT SHARED CONFIGURATION ===
   imports = [ 
-    ./default.nix 
-    ./gnome-user-config.nix  # Import GNOME user configurations
-    ./tmux.nix              # Import tmux configuration
+    ./default.nix   # Import shared home configuration for all users
   ];
 
-  # User info
-  home.username = "nagih";
-  home.homeDirectory = "/home/nagih";
-  home.stateVersion = "25.05";
+  # === USER INFORMATION ===
+  home.username = "nagih";            # Username for this configuration
+  home.homeDirectory = "/home/nagih"; # User's home directory path
+  home.stateVersion = "25.05";        # Home Manager version (should match NixOS)
 
-  # User-specific Git config
+  # === USER-SPECIFIC GIT CONFIGURATION ===
   programs.git = {
-    userName = "Nagih";
-    userEmail = "vuongmanhnghia@gmail.com";
-    
-    extraConfig = {
-      init.defaultBranch = "main";
-      push.default = "simple";
-      pull.rebase = false;
-      core.editor = "nvim";
-    };
+    userName = "Nagih";                    # Git commit author name
+    userEmail = "vuongmanhnghia@gmail.com"; # Git commit author email
   };
 
-  # User-specific packages (additional to GNOME packages)
+  # === USER-SPECIFIC APPLICATIONS ===
   home.packages = with pkgs; [
-    # Personal applications
-    google-chrome
-    discord
-    spotify
-    code-cursor
+    # === PERSONAL PRODUCTIVITY APPLICATIONS ===
+    google-chrome  # Google Chrome web browser
+    discord        # Discord chat and communication platform
+    spotify        # Spotify music streaming service
+    code-cursor    # Cursor AI-powered code editor
     
-    # Gaming
-    steam
-    steam-run
-    protonup-qt    # Proton version management
-    winetricks     # Wine/Proton support
+    # === GAMING APPLICATIONS ===
+    steam          # Steam gaming platform
+    steam-run      # Steam runtime for non-Steam applications
+    protonup-qt    # Proton version management GUI tool
+    winetricks     # Wine/Proton dependency management tool
     
-    # Productivity
-    obsidian
-    obs-studio
+    # === PRODUCTIVITY AND CONTENT CREATION ===
+    obsidian       # Note-taking and knowledge management application
+    obs-studio     # Open Broadcaster Software for streaming and recording
   ];
   
-  # Syncthing configuration
+  # === SYNCTHING FILE SYNCHRONIZATION SERVICE ===
   services.syncthing = {
-    enable = true;
+    enable = true;  # Enable Syncthing file synchronization
     
     settings = {
-      # GUI configuration
+      # === SYNCTHING WEB GUI CONFIGURATION ===
       gui = {
-        address = "127.0.0.1:8384";
-        user = "nagih";
-        # NOTE: Set password via web interface for security
-        # Remove hardcoded password from config
+        address = "127.0.0.1:8384";  # Local web interface address
+        user = "nagih";              # GUI username
       };
       
+      # === DEVICE CONFIGURATION ===
+      # Define other devices for synchronization (replace IDs with actual device IDs)
       devices = {
-        # NOTE: Replace with actual device IDs
-        "laptop" = { id = "LAPTOP-DEVICE-ID-HERE"; };
-        "desktop" = { id = "ABLZ4HZ-4LT6U5O-KLDDQO7-WTCX3KQ-CJBPT73-666IPZJ-UALV3FO-GEG5DQU"; };
+        "laptop" = { id = "LAPTOP-DEVICE-ID-REPLACE-ME"; };   # Laptop device
+        "desktop" = { id = "DESKTOP-DEVICE-ID-REPLACE-ME"; }; # Desktop device
       };
       
-      # Sync folder configuration
+      # === FOLDER SYNCHRONIZATION CONFIGURATION ===
       folders = {
+        # Synchronize Documents folder across devices
         "Documents" = {
-          id = "documents";
-          path = "/home/nagih/Documents";
-          devices = [ "laptop" "desktop" ];
-          versioning = {
-            type = "simple";
-            params = {
-              keep = "10";  # Keep 10 old versions
-            };
-          };
+          id = "documents";                     # Unique folder identifier
+          path = "/home/nagih/Documents";       # Local folder path
+          devices = [ "laptop" "desktop" ];     # Devices to sync with
         };
         
-        "Photos" = {
-          id = "photos";
-          path = "/home/nagih/Pictures/Sync";
-          devices = [ "desktop" "laptop" ];
-          type = "receiveonly";  # Only receive, don't send
-        };
-
+        # Synchronize Workspaces folder for development projects
         "Workspaces" = {
-          id = "workspaces";
-          path = "/home/nagih/Workspaces/workspaces";
-          devices = ["desktop" "laptop"];
+          id = "workspaces";                    # Unique folder identifier
+          path = "/home/nagih/Workspaces";      # Local folder path
+          devices = ["desktop" "laptop"];       # Devices to sync with
         };
-      };
-      
-      # Global options
-      options = {
-        globalAnnounceEnabled = true;
-        localAnnounceEnabled = true;
-        relaysEnabled = true;
       };
     };
   };
   
-  # Create necessary directories
-  home.activation.createSyncthingDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
-    mkdir -p $HOME/Documents
-    mkdir -p $HOME/Pictures/Sync
-    mkdir -p $HOME/Workspaces/workspaces
+  # === DIRECTORY CREATION ===
+  # Ensure required directories exist for Syncthing
+  home.activation.createSyncDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p $HOME/Documents   # Create Documents directory if it doesn't exist
+    mkdir -p $HOME/Workspaces  # Create Workspaces directory if it doesn't exist
   '';
   
-  # Development environment
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  # User-specific aliases for development workflow
+  # === USER-SPECIFIC SHELL ALIASES ===
   programs.bash.shellAliases = {
-    workspaces = "cd ~/Workspaces";
-    web = "cd ~/Workspaces/Dev/Web";
-    app = "cd ~/Workspaces/Dev/App";
-    nixconfig = "cd ~/Workspaces/config/nixos";
+    # === UTILITY ALIASES ===
+    cls = "clear";  # Clear terminal screen (Windows-style alias)
+
+    # === DEVELOPMENT NAVIGATION SHORTCUTS ===
+    workspaces = "cd ~/Workspaces";          # Navigate to main workspace directory
+    web = "cd ~/Workspaces/Dev/Web";         # Navigate to web development projects
+    app = "cd ~/Workspaces/Dev/App";         # Navigate to application development projects
     
-    # GNOME-specific aliases
-    gnome-reset = "dconf reset -f /org/gnome/";
-    gnome-backup = "dconf dump /org/gnome/ > ~/gnome-settings-backup.txt";
-    gnome-restore = "dconf load /org/gnome/ < ~/gnome-settings-backup.txt";
-    extensions-list = "gnome-extensions list";
-    extensions-prefs = "gnome-extensions prefs";
-    
-    # Tmux aliases
-    tm = "tmux";
-    tma = "tmux attach";
-    tms = "tmux list-sessions";
-    tmk = "tmux kill-session -t";
-    tmux-helper = "bash ~/Workspaces/Config/nixos/home/tmux-helper.sh";
-    th = "bash ~/Workspaces/Config/nixos/home/tmux-helper.sh";  # Short alias
-    
-    # VSCode launcher alias
-    vscode = "vscode-launcher";
-  };
-  
-  # Add tmux helper script to PATH
-  home.file.".local/bin/tmux-helper" = {
-    source = ./tmux-helper.sh;
-    executable = true;
+    # === TMUX SESSION MANAGEMENT ===
+    tm = "tmux";                             # Short alias for tmux
+    tma = "tmux attach";                     # Attach to existing tmux session
+    tms = "tmux list-sessions";              # List all tmux sessions
   };
 
-  # Add vscode-launcher script to fix VSCode issues
-  home.file.".local/bin/vscode-launcher" = {
-    text = ''
-      #!/bin/bash
-      # Clear LD_LIBRARY_PATH to avoid conflicts with Cursor libraries
-      # Force X11 backend (already set in sessionVariables but ensuring here)
-      env \
-        LD_LIBRARY_PATH="" \
-        ELECTRON_FORCE_IS_PACKAGED="true" \
-        ELECTRON_NO_ATTACH_CONSOLE="1" \
-        ${pkgs.vscode}/bin/code \
-        --no-sandbox \
-        --disable-gpu-sandbox \
-        --disable-dev-shm-usage \
-        "$@"
-    '';
-    executable = true;
-  };
-
-  # Add convenient vscode-open script
-  home.file.".local/bin/vscode-open" = {
-    text = ''
-      #!/bin/bash
-      # Convenient script to open VSCode with proper environment
-      echo "Opening VSCode..."
-      
-      # Ensure proper environment
-      export NIXOS_OZONE_WL="0"
-      export GDK_BACKEND="x11"
-      export QT_QPA_PLATFORM="xcb"
-      export LD_LIBRARY_PATH=""
-      
-      # Launch VSCode
-      exec ${pkgs.vscode}/bin/code \
-        --no-sandbox \
-        --disable-gpu-sandbox \
-        --disable-dev-shm-usage \
-        "$@"
-    '';
-    executable = true;
-  };
-
-  # Environment variables - removed conflicts, kept user-specific only
+  # === USER-SPECIFIC ENVIRONMENT VARIABLES ===
   home.sessionVariables = {
-    # Personal development settings
-    EDITOR = "nvim";
-    BROWSER = "google-chrome";
-    TERMINAL = "gnome-terminal";
-    
-    # Personal directories
-    DOWNLOAD_DIR = "${config.home.homeDirectory}/Downloads";
-    DOCUMENTS_DIR = "${config.home.homeDirectory}/Documents";
-    
-    # Development environment
-    NODE_OPTIONS = "--max-old-space-size=8192";
-    PNPM_HOME = "${config.home.homeDirectory}/.pnpm";
-    CARGO_HOME = "${config.home.homeDirectory}/.cargo";
-    
-    # Personal productivity
-    OBSIDIAN_USE_WAYLAND = "1";
-    ANKI_WAYLAND = "1";
+    DOWNLOAD_DIR = "${config.home.homeDirectory}/Downloads";  # Downloads directory path
+    DOCUMENTS_DIR = "${config.home.homeDirectory}/Documents"; # Documents directory path
   };
 }

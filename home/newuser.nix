@@ -19,14 +19,12 @@
     # Different tools for this user
     libreoffice
     gimp
+    firefox
   ];
 
-  # Different shell for this user (optional)
-  programs.zsh = {
-    enable = true;
-    oh-my-zsh = {
-      enable = true;
-      theme = "robbyrussell";
-    };
+  # Additional shell aliases for this user
+  programs.bash.shellAliases = {
+    docs = "cd ~/Documents";
+    pics = "cd ~/Pictures";
   };
 }
