@@ -249,6 +249,7 @@ perform_rebuild() {
 }
 
 cleanup_generations() {
+
     log_step "Cleaning up old generations..."
     
     if [[ "$DRY_RUN" == "true" ]]; then
@@ -256,9 +257,13 @@ cleanup_generations() {
         return 0
     fi
     
+    
     # Keep recent generations
-    sudo nix-collect-garbage --delete-older-than 7d
+    # sudo nix-collect-garbage --delete-older-than 7d
+    sudo nix-collect-garbage -d
+    nix-collect-garbage -d
     sudo nix-store --gc
+    sudo nix-store --optimise
     
     log_success "Cleanup completed"
 }
