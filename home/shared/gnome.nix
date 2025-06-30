@@ -10,6 +10,7 @@
       clock-format = "24h";
       gtk-theme = "Adwaita";
       icon-theme = "Papirus-Dark";
+      cursor-theme = "WhiteSur-cursors";
       font-name = "Inter 11";
       monospace-font-name = "JetBrains Mono 10";
     };
@@ -82,6 +83,12 @@
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
+    };
+    
+    cursorTheme = {
+      name = "WhiteSur-cursors";
+      package = pkgs.whitesur-cursors;
+      size = 24;
     };
     
     font = {
