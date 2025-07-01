@@ -79,22 +79,6 @@
     mkdir -p $HOME/Documents   # Create Documents directory if it doesn't exist
     mkdir -p $HOME/Workspaces  # Create Workspaces directory if it doesn't exist
   '';
-  
-  # === USER-SPECIFIC SHELL ALIASES ===
-  programs.bash.shellAliases = {
-    # === UTILITY ALIASES ===
-    cls = "clear";  # Clear terminal screen (Windows-style alias)
-
-    # === DEVELOPMENT NAVIGATION SHORTCUTS ===
-    workspaces = "cd ~/Workspaces";          # Navigate to main workspace directory
-    web = "cd ~/Workspaces/Dev/Web";         # Navigate to web development projects
-    app = "cd ~/Workspaces/Dev/App";         # Navigate to application development projects
-    
-    # === TMUX SESSION MANAGEMENT ===
-    tm = "tmux";                             # Short alias for tmux
-    tma = "tmux attach";                     # Attach to existing tmux session
-    tms = "tmux list-sessions";              # List all tmux sessions
-  };
 
   # === USER-SPECIFIC ENVIRONMENT VARIABLES ===
   home.sessionVariables = {

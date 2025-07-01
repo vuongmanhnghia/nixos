@@ -42,6 +42,23 @@
     bat      # Syntax-highlighted cat replacement
     eza      # Modern ls replacement with better formatting
     
+    # === SYNTAX HIGHLIGHTING AND CODE TOOLS ===
+    highlight         # Universal syntax highlighter
+    glow             # Markdown renderer for terminal
+    delta            # Better git diff with syntax highlighting
+    zsh-syntax-highlighting  # Syntax highlighting for zsh commands
+    
+    # === COMMAND LINE ENHANCEMENTS ===
+    bash-completion   # Enhanced bash completion
+    nix-bash-completions  # Nix-specific bash completions
+    bash-preexec     # Preexec hooks for bash
+    nix-index        # Fast file and package search for Nix
+    comma            # Command-not-found handler for Nix
+    
+    # === ADDITIONAL CLI TOOLS ===
+    thefuck          # Command correction tool
+    mcfly            # Neural command history search
+    
     # === ARCHIVE AND COMPRESSION TOOLS ===
     unzip    # Extract ZIP archives
     p7zip    # 7-Zip archive format support
