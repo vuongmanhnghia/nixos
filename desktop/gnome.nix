@@ -20,6 +20,7 @@
     gnomeExtensions.user-themes         # Custom theme support
     gnomeExtensions.system-monitor-next # Modern system stats (replaces vitals)
     gnomeExtensions.clipboard-indicator # Clipboard history management
+    gnomeExtensions.hidden-input-method-panel # Input method panel for Fcitx5 on Wayland (kimpanel protocol)
     
     # === MODERN UI/UX ENHANCEMENTS ===
     gnomeExtensions.caffeine            # Prevent system sleep on demand
@@ -401,6 +402,7 @@
             "user-theme@gnome-shell-extensions.gcampax.github.com"
             "system-monitor-next@paradoxxx.zero.gmail.com"
             "clipboard-indicator@tudmotu.com"
+            "kimpanel@kde.org"                                                # Input method panel for Fcitx5
             "night-theme-switcher@romainvigier.fr"
             "AlphabeticalAppGrid@stuarthayhurst"
             "rounded-corners@fxgn"
