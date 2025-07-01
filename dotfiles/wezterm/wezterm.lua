@@ -1,10 +1,10 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local io = require("io")
-local brightness = 0.03
+local brightness = 0.08
 
--- === SHELL CONFIGURATION ===
-config.default_prog = { "bash", "-l" }
+-- === SHELL AND PROCESS CONFIGURATION ===
+config.default_prog = { "zsh", "-l" }  -- Use ZSH for Powerlevel10k
 
 -- === BACKGROUND IMAGE SYSTEM ===
 local home = os.getenv("HOME")
@@ -36,8 +36,13 @@ config.window_background_image_hsb = {
 
 -- === APPEARANCE ===
 config.color_scheme = "Tokyo Night"
-config.font = wezterm.font("Inconsolata Nerd Font Mono", { weight = "Regular" })
-config.font_size = 14
+config.font = wezterm.font_with_fallback({
+	{ family = "MesloLGS Nerd Font", weight = "Regular" },  -- Primary font for Powerlevel10k
+	{ family = "Inconsolata Nerd Font Mono", weight = "Regular" },  -- Fallback
+	{ family = "JetBrainsMono Nerd Font", weight = "Regular" },     -- Additional fallback
+})
+config.font_size = 12.0
+config.line_height = 1.1  -- Better line spacing for icons
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_thickness = 2
 

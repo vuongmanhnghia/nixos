@@ -54,6 +54,7 @@
     bash-preexec     # Preexec hooks for bash
     nix-index        # Fast file and package search for Nix
     comma            # Command-not-found handler for Nix
+    blesh            # Bash Line Editor with syntax highlighting
     
     # === ADDITIONAL CLI TOOLS ===
     thefuck          # Command correction tool

@@ -38,7 +38,7 @@
       
       # === SYSTEM MANAGEMENT ===
       oh = "cd ~/ && echo 'Went back home'";
-      config = "cd ~/Workspaces/Config/nixos";
+      config = "cd /etc/nixos";
       nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
       nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
       home-rebuild = "home-manager switch --flake ~/Workspaces/Config/nixos";
@@ -109,9 +109,6 @@
         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
       }
       
-      # Enhanced prompt with git support
-      export PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[34m\]\w\[\e[33m\]\$(parse_git_branch)\[\e[0m\]\$ "
-      
       # === DEVELOPMENT ENVIRONMENT VARIABLES ===
       export EDITOR="nvim"
       export VISUAL="nvim"
@@ -143,7 +140,7 @@
       fi
       
       # === COMMAND SYNTAX HIGHLIGHTING ===
-      # Simple command highlighting using existing tools
+      # Real-time command highlighting with ble.sh
       export CLICOLOR=1
       export CLICOLOR_FORCE=1
       
@@ -154,20 +151,63 @@
       alias diff='diff --color=auto'
       alias ip='ip --color=auto'
       
-      # Custom function to highlight commands as you type (simple version)
-      highlight_prompt() {
-        local cmd="$1"
+      # === BLE.SH INTEGRATION FOR REAL-TIME HIGHLIGHTING ===
+      # Load ble.sh if available for advanced bash line editing
+      if [[ -f "${pkgs.blesh}/share/blesh/ble.sh" ]]; then
+        source "${pkgs.blesh}/share/blesh/ble.sh"
         
-        # Check if first word is a valid command
-        local first_word=$(echo "$cmd" | awk '{print $1}')
-        if command -v "$first_word" &> /dev/null 2>&1; then
-          # Command exists - green
-          echo -e "\033[1;32m$first_word\033[0m ''${cmd#* }"
-        else
-          # Command doesn't exist - red
-          echo -e "\033[1;31m$first_word\033[0m ''${cmd#* }"
+        # Configure ble.sh for syntax highlighting
+        bleopt syntax_highlighting_style='auto'
+        bleopt complete_auto_complete=on
+        bleopt complete_menu_style=desc-text
+        bleopt complete_menu_color=on
+        bleopt complete_ambiguous=on
+        
+        # Custom highlighting colors
+        ble-color-setface command_builtin bright-green
+        ble-color-setface command_function bright-cyan
+        ble-color-setface command_alias bright-blue
+        ble-color-setface command_external bright-green
+        ble-color-setface filename bright-white
+        ble-color-setface argument bright-cyan
+        ble-color-setface varname bright-yellow
+        ble-color-setface option bright-magenta
+        
+      else
+        # Fallback: Load bash-preexec for basic highlighting
+        if [[ -f "${pkgs.bash-preexec}/share/bash/bash-preexec.sh" ]]; then
+          source "${pkgs.bash-preexec}/share/bash/bash-preexec.sh"
         fi
-      }
+        
+        # Enhanced readline configuration
+        if [[ -n "$PS1" ]]; then
+          bind 'set colored-stats on'
+          bind 'set colored-completion-prefix on'
+          bind 'set completion-ignore-case on'
+          bind 'set show-all-if-ambiguous on'
+          bind 'set show-all-if-unmodified on'
+          bind 'set menu-complete-display-prefix on'
+          bind 'set visible-stats on'
+        fi
+        
+        # Pre-execution highlighting
+        if declare -f preexec > /dev/null 2>&1; then
+          preexec() {
+            local cmd="$1"
+            local first_word=$(echo "$cmd" | awk '{print $1}')
+            
+            echo -en "\033[1A\033[2K"
+            if command -v "$first_word" &> /dev/null 2>&1; then
+              echo -e "\033[32m➤\033[0m \033[1;32m$first_word\033[0;36m ''${cmd#* }\033[0m"
+            else
+              echo -e "\033[31m✗\033[0m \033[1;31m$first_word\033[0;36m ''${cmd#* }\033[0m"
+            fi
+          }
+        fi
+      fi
+      
+      # Enhanced prompt with git support
+      export PS1="\[\e[32m\]\u@\h\[\e[0m\]:\[\e[34m\]\w\[\e[33m\]\$(parse_git_branch)\[\e[0m\]\$ "
       
       # === ENHANCED BASH COMPLETION ===
       # Load bash completion if available
@@ -339,10 +379,21 @@
     '';
   };
 
-  # === ADDITIONAL PACKAGES FOR SYNTAX HIGHLIGHTING ===
+  # === ADDITIONAL PACKAGES FOR SYNTAX HIGHLIGHTING AND ZSH ===
   home.packages = with pkgs; [
+    # Bash tools
     bash-preexec          # Preexec hook for bash
     nix-index             # For command-not-found functionality
+    
+    # ZSH tools  
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    zsh-completions
+    nix-zsh-completions
+    zsh-powerlevel10k     # Beautiful and fast ZSH theme
+    
+    # Fonts for powerlevel10k (new format)
+    nerd-fonts.meslo-lg
   ];
 
   # === DIRECTORY ENVIRONMENT MANAGEMENT ===
@@ -350,5 +401,252 @@
     enable = true;
     enableBashIntegration = true;
     nix-direnv.enable = true;
+  };
+
+  # === ZSH SHELL CONFIGURATION (RECOMMENDED FOR SYNTAX HIGHLIGHTING) ===
+  programs.zsh = {
+    enable = true;
+    
+    # === ZSH-SPECIFIC ALIASES (inherit from bash) ===
+    shellAliases = {
+      # === BASIC SYSTEM ALIASES ===
+      cls = "clear";
+      ll = "eza -la --icons --git --header";
+      la = "eza -a --icons";
+      l = "eza -CF --icons";
+      ls = "eza --icons --group-directories-first";
+      
+      # === MODERN CLI REPLACEMENTS ===
+      cat = "bat --style=numbers,changes,header";
+      grep = "rg --color=auto --smart-case";
+      find = "fd --color=auto";
+      tree = "eza --tree --icons";
+      
+      # === GIT SHORTCUTS ===
+      g = "git";
+      ga = "git add";
+      gaa = "git add --all";
+      gc = "git commit -v";
+      gcm = "git commit -m";
+      gco = "git checkout";
+      gcb = "git checkout -b";
+      gd = "git diff";
+      gds = "git diff --staged";
+      gl = "git log --oneline --graph --decorate";
+      gp = "git push";
+      gpl = "git pull";
+      gs = "git status --short";
+      gst = "git status";
+      
+      # === SYSTEM MANAGEMENT ===
+      oh = "cd ~/ && echo 'Went back home'";
+      config = "cd /etc/nixos";
+      nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
+      nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
+      home-rebuild = "home-manager switch --flake ~/Workspaces/Config/nixos";
+      
+      # === DEVELOPMENT NAVIGATION ===
+      dev = "cd ~/Workspaces/Dev";
+      nixconfig = "cd ~/Workspaces/Config/nixos";
+      workspaces = "cd ~/Workspaces";
+      web = "cd ~/Workspaces/Dev/Web";
+      app = "cd ~/Workspaces/Dev/App";
+      
+      # === TMUX SESSION MANAGEMENT ===
+      tm = "tmux";
+      tma = "tmux attach-session -t";
+      tmn = "tmux new-session -s";
+      tms = "tmux list-sessions";
+      tmk = "tmux kill-session -t";
+      
+      # === SYSTEM MONITORING ===
+      top = "btop";
+      htop = "btop";
+      df = "duf";
+      du = "dust";
+      ps = "procs";
+      
+      # === UTILITY SHORTCUTS ===
+      h = "history";
+      j = "jobs";
+      path = "echo $PATH | tr ':' '\n'";
+      reload = "source ~/.zshrc";
+      edit = "nvim";
+      
+      # === NETWORK UTILITIES ===
+      ping = "ping -c 5";
+      wget = "wget --continue --progress=bar --timestamping";
+      
+      # === CLIPBOARD UTILITIES (Wayland) ===
+      copy = "wl-copy";
+      paste = "wl-paste";
+      
+      # === DIRECTORY OPERATIONS ===
+      mkdir = "mkdir -pv";
+      rmdir = "rmdir -v";
+      cp = "cp -iv";
+      mv = "mv -iv";
+      rm = "rm -iv";
+      
+      # === ARCHIVE OPERATIONS ===
+      tarxz = "tar -xvf";
+      targz = "tar -czvf";
+      untar = "tar -xvf";
+    };
+
+    # === ZSH CONFIGURATION ===
+    initExtra = ''
+      # === POWERLEVEL10K THEME ===
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      
+      # Load custom Powerlevel10k configuration
+      if [[ -f ~/.config/dotfiles/zsh/p10k.zsh ]]; then
+        source ~/.config/dotfiles/zsh/p10k.zsh
+      fi
+      
+      # === ZSH SYNTAX HIGHLIGHTING ===
+      source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+      source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+      
+      # === SYNTAX HIGHLIGHTING COLORS (TOKYO NIGHT THEME) ===
+      ZSH_HIGHLIGHT_STYLES[command]='fg=#9ece6a,bold'           # Green for commands
+      ZSH_HIGHLIGHT_STYLES[builtin]='fg=#9ece6a,bold'           # Green for builtins
+      ZSH_HIGHLIGHT_STYLES[function]='fg=#7dcfff,bold'          # Cyan for functions
+      ZSH_HIGHLIGHT_STYLES[alias]='fg=#7aa2f7,bold'             # Blue for aliases
+      ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#f7768e,bold'     # Red for unknown
+      ZSH_HIGHLIGHT_STYLES[path]='fg=#bb9af7'                   # Purple for paths
+      ZSH_HIGHLIGHT_STYLES[globbing]='fg=#e0af68'               # Yellow for globbing
+      ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#7aa2f7'      # Blue for history
+      ZSH_HIGHLIGHT_STYLES[command-substitution]='fg=#7dcfff'   # Cyan for substitution
+      ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[process-substitution]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#e0af68'   # Yellow for options
+      ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#e0af68'
+      ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#9ece6a'
+      ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#9ece6a'
+      ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#9ece6a'
+      ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=#9ece6a'
+      ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=#7dcfff'
+      ZSH_HIGHLIGHT_STYLES[assign]='fg=#bb9af7'                 # Purple for assignments
+      ZSH_HIGHLIGHT_STYLES[redirection]='fg=#e0af68'            # Yellow for redirection
+      ZSH_HIGHLIGHT_STYLES[comment]='fg=#565f89,bold'           # Dim for comments
+      ZSH_HIGHLIGHT_STYLES[named-fd]='fg=#e0af68'
+      ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=#e0af68'
+      
+      # === AUTOSUGGESTIONS CONFIGURATION ===
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#565f89'              # Dim gray suggestions
+      ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+      ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+      
+      # === ZSH OPTIONS ===
+      setopt AUTO_CD              # cd by typing directory name
+      setopt CORRECT              # command correction
+      setopt HIST_VERIFY          # verify history expansions
+      setopt SHARE_HISTORY        # share history between sessions
+      setopt APPEND_HISTORY       # append to history file
+      setopt INC_APPEND_HISTORY   # append immediately
+      setopt HIST_IGNORE_DUPS     # ignore duplicate commands
+      setopt HIST_IGNORE_SPACE    # ignore commands starting with space
+      setopt GLOB_COMPLETE        # complete globs
+      setopt AUTO_LIST            # automatically list choices
+      setopt AUTO_MENU            # show completion menu
+      setopt COMPLETE_IN_WORD     # complete from both ends
+      setopt ALWAYS_TO_END        # move cursor to end
+      
+      # === ENVIRONMENT VARIABLES ===
+      export EDITOR="nvim"
+      export VISUAL="nvim"
+      export BROWSER="google-chrome"
+      export TERMINAL="wezterm"
+      export MANPAGER="nvim +Man!"
+      export BAT_THEME="TwoDark"
+      export BAT_PAGER="less -RF"
+      export BAT_STYLE="numbers,changes,header"
+      export EZA_COLORS="da=36:di=34:fi=0:ln=35:pi=33:so=32:bd=33:cd=33:or=31:mi=31:ex=32"
+      export EZA_ICON_SPACING=2
+      export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
+      
+      # === HISTORY CONFIGURATION ===
+      HISTSIZE=50000
+      SAVEHIST=50000
+      HISTFILE=~/.zsh_history
+      
+      # === USEFUL FUNCTIONS ===
+      preview() {
+        if [[ -f "$1" ]]; then
+          bat --color=always --style=header,grid "$1"
+        elif [[ -d "$1" ]]; then
+          eza --tree --icons --level=2 "$1"
+        fi
+      }
+      
+      extract() {
+        if [[ -f $1 ]]; then
+          case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar x $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+          esac
+        else
+          echo "'$1' is not a valid file"
+        fi
+      }
+      
+      mkcd() {
+        mkdir -p "$1" && cd "$1"
+      }
+      
+      backup() {
+        cp "$1"{,.backup-$(date +%Y%m%d-%H%M%S)}
+      }
+      
+      weather() {
+        curl -s "wttr.in/$1?format=3"
+      }
+      
+      # === WELCOME MESSAGE ===
+      if [[ -z "$WELCOME_SHOWN" ]]; then
+        export WELCOME_SHOWN=1
+        echo -e "\e[32m╭─ Welcome to NixOS Terminal (ZSH)\e[0m"
+        echo -e "\e[32m├─ User: \e[36m$(whoami)\e[0m"
+        echo -e "\e[32m├─ Shell: \e[36mzsh $ZSH_VERSION\e[0m"
+        echo -e "\e[32m├─ Uptime: \e[36m$(cat /proc/uptime | awk '{print int($1/3600)"h "int(($1%3600)/60)"m"}')\e[0m"
+        echo -e "\e[32m╰─ Type 'help' for available aliases\e[0m"
+      fi
+      
+      # === HELP FUNCTION ===
+      help() {
+        echo -e "\e[33m=== Available Aliases ===\e[0m"
+        alias | sort | head -20
+        echo -e "\e[33m... (type 'alias' to see all)\e[0m"
+      }
+    '';
+    
+    # === ZSH COMPLETION ===
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    
+    # === ZSH HISTORY ===
+    history = {
+      size = 50000;
+      save = 50000;
+      ignoreDups = true;
+      ignoreSpace = true;
+      share = true;
+    };
   };
 } 
