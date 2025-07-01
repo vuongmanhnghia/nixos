@@ -310,38 +310,13 @@
   services.fwupd.enable = true;     # Firmware update daemon
   services.flatpak.enable = true;   # Flatpak support for additional applications
 
-  # === ENHANCED GNOME-SPECIFIC FONT CONFIGURATION ===
+  # === GNOME-SPECIFIC FONT PACKAGES (UI focused) ===
   fonts = {
-    enableDefaultPackages = true;  # Enable default font packages
-    
     packages = with pkgs; [
-      # Essential fonts for GNOME interface
+      # UI and theme specific fonts
       inter              # Primary UI font
-      jetbrains-mono     # Monospace font for terminal/coding
-      noto-fonts         # Unicode coverage
-      noto-fonts-cjk-sans  # Asian language support
-      noto-fonts-emoji   # Emoji rendering
-      liberation_ttf     # Microsoft font alternatives
       roboto             # Google's Roboto font family
     ];
-    
-    # === FONT OPTIMIZATION (SAFE) ===
-    fontconfig = {
-      enable = true;              # Enable fontconfig
-      antialias = true;           # Enable font anti-aliasing
-      hinting.enable = true;      # Enable font hinting
-      hinting.style = "slight";   # Conservative hinting for better readability
-      subpixel.rgba = "rgb";      # Standard LCD optimization
-      cache32Bit = true;          # Better 32-bit app support
-      
-      # Default font stack with fallbacks
-      defaultFonts = {
-        serif = [ "Noto Serif" "Source Han Serif" ];                              # Serif fonts
-        sansSerif = [ "Inter" "Roboto" "Noto Sans" "Source Han Sans" ];          # Sans-serif fonts
-        monospace = [ "JetBrains Mono" "Source Code Pro" "Noto Sans Mono" ]; # Monospace fonts
-        emoji = [ "Noto Color Emoji" ];                                          # Emoji fonts
-      };
-    };
   };
 
   # === ENHANCED USER PERMISSIONS FOR FULL GNOME FUNCTIONALITY ===

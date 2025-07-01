@@ -26,11 +26,7 @@
       
       # === ADDITIONAL MODERN FONTS ===
       ubuntu_font_family     # Ubuntu's default font family
-      google-fonts           # Google Fonts collection
-      
-      # === NERD FONTS (WITH ICONS AND SYMBOLS) ===
-      nerd-fonts.jetbrains-mono  # JetBrains Mono with developer icons
-      nerd-fonts.fira-code       # Fira Code with developer icons
+      # Removed google-fonts to prevent Inconsolata conflict
     ];
 
     # === FONT CONFIGURATION SETTINGS ===

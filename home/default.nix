@@ -7,6 +7,7 @@
     ./shared/git.nix             # Git version control configuration
     ./shared/shell.nix           # Bash shell with aliases and modern CLI tools
     ./shared/tmux.nix            # Terminal multiplexer configuration
+    ./shared/wezterm.nix         # WezTerm terminal emulator configuration
     ./shared/gnome.nix           # GNOME desktop user settings and themes
     ./shared/editors/neovim.nix  # Neovim editor configuration with LSP
   ];
