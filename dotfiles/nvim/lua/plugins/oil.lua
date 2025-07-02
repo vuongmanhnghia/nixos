@@ -14,6 +14,18 @@ return {
 	lazy = false,
 	config = function()
 		require("oil").setup({
+				-- Show hidden files by default
+			-- view_options = {
+			-- 	show_hidden = true,
+			-- 	-- This function defines what is considered a "hidden" file
+			-- 	is_hidden_file = function(name, bufnr)
+			-- 		return vim.startswith(name, ".")
+			-- 	end,
+			-- 	-- This function defines what will never be shown, even when `show_hidden` is true
+			-- 	is_always_hidden = function(name, bufnr)
+			-- 		return false
+			-- 	end,
+			-- },
 			float = {
 				-- Padding around the floating window
 				padding = 2,
