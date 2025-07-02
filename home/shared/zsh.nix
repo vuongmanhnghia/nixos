@@ -110,6 +110,7 @@
       dev = "cd ~/Workspaces/Dev";
       web = "cd ~/Workspaces/Dev/Web";
       app = "cd ~/Workspaces/Dev/App";
+      lc = "cd ~/Workspaces/Dev/LeetCode";
       docs = "cd ~/Documents";
       down = "cd ~/Downloads";
       
