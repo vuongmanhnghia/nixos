@@ -12,7 +12,7 @@
       icon-theme = "Papirus-Dark";
       cursor-theme = "WhiteSur-cursors";
       font-name = "Inter 11";
-      monospace-font-name = "JetBrains Mono 10";
+      monospace-font-name = "RobotoMono Nerd Font 10";
     };
 
     # Window manager essentials
@@ -64,7 +64,7 @@
 
     # Terminal settings
     "org/gnome/terminal/legacy/profiles:/:default" = {
-      font = "JetBrains Mono 11";
+      font = "RobotoMono Nerd Font 11";
       use-system-font = false;
       audible-bell = false;
       scrollback-unlimited = true;
@@ -92,7 +92,7 @@
     };
     
     font = {
-      name = "Inter";
+      name = "Inter";     # macOS-style system font
       size = 11;
     };
   };

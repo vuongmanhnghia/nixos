@@ -14,6 +14,13 @@
       liberation_ttf          # Liberation fonts (metric-compatible with Microsoft fonts)
       dejavu_fonts            # DejaVu font family (good Unicode coverage)
       
+      # === MACOS-STYLE FONTS ===
+      adwaita-fonts          # Adwaita Sans (variation of Inter, closest to San Francisco Pro)
+      roboto                 # Google's modern system font family (similar to San Francisco)
+      open-sans              # Popular modern web font, great system font alternative
+      aileron                # Helvetica font in nine weights (classic macOS look)
+      manrope                # Modern sans-serif font family
+      
       # === PROGRAMMING AND MONOSPACE FONTS ===
       source-code-pro        # Adobe's monospace font for programming
       fira-code              # Monospace font with programming ligatures
@@ -33,10 +40,10 @@
     fontconfig = {
       enable = true;  # Enable fontconfig for font management
       
-      # Default font fallback chain for different font types
+      # Default font fallback chain for different font types (macOS-style)
       defaultFonts = {
-        serif = [ "Noto Serif" "Source Han Serif" ];        # Serif fonts (formal documents)
-        sansSerif = [ "Noto Sans" "Source Han Sans" ];      # Sans-serif fonts (UI, web)
+        serif = [ "Adwaita Serif" "Roboto Serif" "Noto Serif" "Source Han Serif" ];        # Serif fonts (formal documents)
+        sansSerif = [ "Adwaita Sans" "Roboto" "Open Sans" "Aileron" "Noto Sans" "Source Han Sans" ];      # Sans-serif fonts (UI, web) - macOS-like
         monospace = [ "JetBrains Mono" "Source Code Pro" ]; # Monospace fonts (code, terminal)
         emoji = [ "Noto Color Emoji" ];                     # Emoji rendering
       };

@@ -351,9 +351,9 @@
           gtk-theme = "Adwaita";                      # Default GTK theme
           icon-theme = "Papirus";                     # Modern icon theme
           cursor-theme = "Adwaita";                   # Default cursor theme
-          font-name = "Inter 11";                     # UI font
-          document-font-name = "Inter 11";            # Document font
-          monospace-font-name = "JetBrains Mono 10";  # Terminal/code font
+          font-name = "Inter 11";                     # UI font (macOS-style)
+          document-font-name = "Inter 11";            # Document font (macOS-style)
+          monospace-font-name = "RobotoMono Nerd Font 10";  # Terminal/code font (macOS-style)
           gtk-enable-primary-paste = false;           # Disable middle-click paste
           # MODERN INTERFACE ENHANCEMENTS
           color-scheme = "prefer-dark";               # Dark theme default
@@ -521,7 +521,7 @@
 
         # === TERMINAL CONFIGURATION ===
         "org/gnome/terminal/legacy/profiles:/:default" = {
-          font = "JetBrains Mono 10";  # Terminal font
+          font = "RobotoMono Nerd Font 10";  # Terminal font (macOS-style)
           use-system-font = false;     # Use custom font
           audible-bell = false;        # Disable terminal bell
           # TERMINAL ENHANCEMENTS
