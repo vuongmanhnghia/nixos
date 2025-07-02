@@ -14,7 +14,7 @@
         "audio"          # Audio devices access
         "video"          # Video devices and GPU access
       ];
-      shell = pkgs.bash;       # Default shell (bash)
+      shell = pkgs.zsh;       # Default shell (zsh)
     };
   };
 

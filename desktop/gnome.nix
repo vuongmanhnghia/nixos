@@ -66,10 +66,6 @@
     adwaita-qt                # Qt applications integration with GTK theme
     adwaita-qt6               # Qt6 applications theme consistency
     
-    # === ESSENTIAL SYSTEM UTILITIES ===
-    htop                      # Enhanced system monitor
-    neofetch                  # System information display with ASCII art
-    
     # === X11 FALLBACK APP LAUNCHERS ===
     # Simple commands for apps that work better with X11
     (writeShellScriptBin "cursor-x11" ''

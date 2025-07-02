@@ -7,4 +7,7 @@
     ./gaming.nix       # Gaming platform (Steam, GameMode, controllers, Wine)
     ./multimedia.nix   # Multimedia applications (VLC, GIMP, LibreOffice, Vietnamese input)
   ];
+  
+  # === SHELL CONFIGURATION ===
+  programs.zsh.enable = true;  # Enable zsh shell with proper PATH configuration
 } 

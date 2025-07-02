@@ -65,7 +65,7 @@ home-manager switch --flake .
 nixos-rebuild    # System rebuild
 home-rebuild     # Home Manager rebuild
 dev              # cd ~/Workspaces/Dev
-nixconfig        # cd to config directory
+config           # cd to config directory
 ```
 
 ## ✨ Tính năng

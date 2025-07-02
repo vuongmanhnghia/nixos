@@ -38,14 +38,13 @@
       
       # === SYSTEM MANAGEMENT ===
       oh = "cd ~/ && echo 'Went back home'";
-      config = "cd /etc/nixos";
+      config = "cd ~/Workspaces/Config/nixos";
       nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
       nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
       home-rebuild = "home-manager switch --flake ~/Workspaces/Config/nixos";
       
       # === DEVELOPMENT NAVIGATION ===
       dev = "cd ~/Workspaces/Dev";
-      nixconfig = "cd ~/Workspaces/Config/nixos";
       workspaces = "cd ~/Workspaces";
       web = "cd ~/Workspaces/Dev/Web";
       app = "cd ~/Workspaces/Dev/App";
@@ -156,18 +155,18 @@
       if [[ -f "${pkgs.blesh}/share/blesh/ble.sh" ]]; then
         source "${pkgs.blesh}/share/blesh/ble.sh"
         
-        # Configure ble.sh for syntax highlighting
-        bleopt syntax_highlighting_style='auto'
+        # Configure ble.sh for syntax highlighting (fixed configuration)
         bleopt complete_auto_complete=on
-        bleopt complete_menu_style=desc-text
         bleopt complete_menu_color=on
         bleopt complete_ambiguous=on
         
-        # Custom highlighting colors
+        # Use working completion menu style
+        bleopt complete_menu_style=linewise
+        
+        # Custom highlighting colors (only define colors that exist)
         ble-color-setface command_builtin bright-green
         ble-color-setface command_function bright-cyan
         ble-color-setface command_alias bright-blue
-        ble-color-setface command_external bright-green
         ble-color-setface filename bright-white
         ble-color-setface argument bright-cyan
         ble-color-setface varname bright-yellow
@@ -440,14 +439,13 @@
       
       # === SYSTEM MANAGEMENT ===
       oh = "cd ~/ && echo 'Went back home'";
-      config = "cd /etc/nixos";
+      config = "cd ~/Workspaces/Config/nixos";
       nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
       nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
       home-rebuild = "home-manager switch --flake ~/Workspaces/Config/nixos";
       
       # === DEVELOPMENT NAVIGATION ===
       dev = "cd ~/Workspaces/Dev";
-      nixconfig = "cd ~/Workspaces/Config/nixos";
       workspaces = "cd ~/Workspaces";
       web = "cd ~/Workspaces/Dev/Web";
       app = "cd ~/Workspaces/Dev/App";

@@ -7,27 +7,11 @@
     curl     # Command-line tool for data transfer with URLs
     wget     # Network downloader for retrieving files from web servers
     
-    # === VERSION CONTROL ===
-    git      # Distributed version control system
-    
     # === REMOTE ACCESS ===
     openssh  # Secure Shell for remote login and command execution
     
     # === SYSTEM MONITORING ===
     htop     # Interactive process viewer and system monitor
-    
-    # === C++ DEVELOPMENT ECOSYSTEM ===
-    
-    # Core compilers and build systems
-    gcc         # GNU Compiler Collection for C/C++
-    clang       # LLVM-based C/C++ compiler with better diagnostics
-    cmake       # Cross-platform build system generator
-    gnumake     # GNU make build automation tool
-    ninja       # Fast build system focused on speed
-    pkg-config  # Helper tool for compiling applications and libraries
-    
-    # Language Server Protocol and development tools
-    clang-tools  # Includes clangd (LSP), clang-format, clang-tidy for code analysis
     
     # Debugging and analysis tools
     gdb         # GNU Debugger for debugging programs

@@ -9,10 +9,7 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.meslo-lg  # Required for Powerlevel10k
-    
-    # === GOOGLE FONTS ===
-    google-fonts
-    
+        
     # === SYSTEM FONTS ===
     inter
     roboto

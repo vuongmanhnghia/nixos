@@ -94,7 +94,7 @@
       gst = "git status";
       
       # === SYSTEM MANAGEMENT (Enhanced) ===
-      config = "cd ~/Workspaces/Config/nixos && $EDITOR .";
+      config = "cd ~/Workspaces/Config/nixos";
       nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
       nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
       home-rebuild = "home-manager switch --flake ~/Workspaces/Config/nixos";
@@ -115,8 +115,8 @@
       
       # === QUICK UTILITIES ===
       cls = "clear";
-      h = "history | fzf";                             # Fuzzy history search
-      hg = "history | grep";                           # Grep history
+      h = "history";                                  # Fuzzy history search
+      hg = "history | grep";                          # Grep history
       weather = "curl wttr.in";                       # Quick weather
       ip = "curl ifconfig.me";                        # Public IP
       localip = "ip route get 1 | awk '{print \$7}'"; # Local IP
@@ -244,17 +244,5 @@
     duf                        # Modern df replacement
     procs                      # Modern ps replacement
     mcfly                      # Smart command history search
-    
-    # === FZF AND INTEGRATIONS ===
-    fzf                        # Fuzzy finder
-    fd                         # Fast find replacement
-    bat                        # Cat with syntax highlighting
-    eza                        # Modern ls replacement
-    ripgrep                    # Fast grep replacement
-    
-    # === SYSTEM UTILITIES ===
-    neofetch                   # System information
-    btop                       # Modern top replacement
-    htop                       # Interactive process viewer
   ];
 } 

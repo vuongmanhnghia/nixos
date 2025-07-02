@@ -33,7 +33,7 @@ if vim.fn.isdirectory(config_path) == 1 then
     lazy_opts.lockfile = lockfile_path
 elseif not (uname.sysname == "Darwin" and hostname == "nagih") then
     -- Fallback cho các hệ thống khác
-    lazy_opts.lockfile = "/etc/nixos/dotfiles/nvim/lazy-lock.json"
+    lazy_opts.lockfile = "~/Workspaces/Config/nixos/dotfiles/nvim/lazy-lock.json"
 end
 
 require("lazy").setup("plugins", lazy_opts)

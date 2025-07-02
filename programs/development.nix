@@ -75,6 +75,18 @@
     nodejs   # Node.js JavaScript runtime for web development
     python3  # Python 3 interpreter for scripting and development
     
+    # === C++ DEVELOPMENT ECOSYSTEM ===
+    # Core compilers and build systems
+    gcc         # GNU Compiler Collection for C/C++
+    clang       # LLVM-based C/C++ compiler with better diagnostics
+    cmake       # Cross-platform build system generator
+    gnumake     # GNU make build automation tool
+    ninja       # Fast build system focused on speed
+    pkg-config  # Helper tool for compiling applications and libraries
+    
+    # Language Server Protocol and development tools
+    clang-tools  # Includes clangd (LSP), clang-format, clang-tidy for code analysis
+    
     # === SYSTEM INFORMATION TOOLS ===
     neofetch  # System information display tool
     lshw      # List hardware information
