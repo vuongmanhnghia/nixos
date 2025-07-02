@@ -107,10 +107,10 @@
       tmk = "tmux kill-session -t";
       
       # === DEVELOPMENT SHORTCUTS ===
-      dev = "cd ~/Workspaces/Dev";
-      web = "cd ~/Workspaces/Dev/Web";
-      app = "cd ~/Workspaces/Dev/App";
-      lc = "cd ~/Workspaces/Dev/LeetCode";
+      wsp = "cd ~/Workspaces";
+      web = "cd ~/Workspaces/Web";
+      app = "cd ~/Workspaces/App";
+      lc = "cd ~/Workspaces/LeetCode";
       docs = "cd ~/Documents";
       down = "cd ~/Downloads";
       
