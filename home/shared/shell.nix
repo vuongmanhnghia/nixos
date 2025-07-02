@@ -167,10 +167,6 @@
         ble-color-setface command_builtin bright-green
         ble-color-setface command_function bright-cyan
         ble-color-setface command_alias bright-blue
-        ble-color-setface filename bright-white
-        ble-color-setface argument bright-cyan
-        ble-color-setface varname bright-yellow
-        ble-color-setface option bright-magenta
         
       else
         # Fallback: Load bash-preexec for basic highlighting
