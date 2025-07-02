@@ -140,6 +140,16 @@ return {
 				local symbols = symbols_map[filetype] or "function"
 				require("fzf-lua").lsp_document_symbols({ symbols = symbols })
 			end, {})
+			-- Set C++ specific indentation to match formatting
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "c", "cpp", "objc", "objcpp" },
+				callback = function()
+					vim.opt_local.tabstop = 2
+					vim.opt_local.shiftwidth = 2
+					vim.opt_local.softtabstop = 2
+					vim.opt_local.expandtab = true
+				end,
+			})
 		end,
 	},
 }

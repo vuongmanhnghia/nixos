@@ -6,8 +6,8 @@
   imports = [
     ./shared/fonts.nix           # Fonts
     ./shared/git.nix             # Git version control configuration
-    ./shared/shell.nix           # Bash shell with aliases and modern CLI tools
-    ./shared/zsh.nix             # Zsh with aliases and modern CLI tools
+    ./shared/bash.nix            # Bash shell with aliases and modern CLI tools
+    ./shared/zsh.nix             # Zsh shell with aliases and modern CLI tools
     ./shared/tmux.nix            # Terminal multiplexer configuration
     ./shared/wezterm.nix         # WezTerm terminal emulator configuration
     ./shared/gnome.nix           # GNOME desktop user settings and themes

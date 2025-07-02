@@ -105,6 +105,7 @@
       tmn = "tmux new-session -s";
       tml = "tmux list-sessions";
       tmk = "tmux kill-session -t";
+      tmd = "tmux detach";
       
       # === DEVELOPMENT SHORTCUTS ===
       wsp = "cd ~/Workspaces";
