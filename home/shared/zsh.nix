@@ -21,7 +21,6 @@
     # === OH-MY-ZSH INTEGRATION ===
     oh-my-zsh = {
       enable = true;
-      theme = "powerlevel10k/powerlevel10k";  # Modern, fast, customizable prompt
       
       plugins = [
         # === ESSENTIAL PRODUCTIVITY PLUGINS ===
@@ -143,9 +142,14 @@
     # === ADVANCED ZSH CONFIGURATION ===
     initExtra = ''
       # === POWERLEVEL10K INSTANT PROMPT ===
+      # Enable instant prompt but suppress warnings to fix console output issue
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
+      
+      # === POWERLEVEL10K THEME SETUP ===
+      # Source Powerlevel10k theme from nix package
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       
       # === MODERN ZSH OPTIONS ===
       setopt AUTO_CD              # cd to directory by typing name
@@ -210,7 +214,7 @@
       export EDITOR="nvim"
       export VISUAL="nvim"
       export BROWSER="google-chrome"
-      export TERMINAL="gnome-terminal"
+      export TERMINAL="wezterm"
       export MANPAGER="nvim +Man!"
       
       # === PERFORMANCE OPTIMIZATIONS ===
@@ -227,9 +231,12 @@
       
       # === POWERLEVEL10K CONFIGURATION ===
       # To customize prompt, run: p10k configure
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      [[ ! -f ~/.config/dotfiles/zsh/p10k.zsh ]] || source ~/.config/dotfiles/zsh/p10k.zsh
     '';
   };
+
+  # === P10K CONFIGURATION FILE ===
+  xdg.configFile."dotfiles/zsh/p10k.zsh".source = ../../dotfiles/zsh/p10k.zsh;
 
   # === ADDITIONAL PACKAGES FOR ZSH ===
   home.packages = with pkgs; [
