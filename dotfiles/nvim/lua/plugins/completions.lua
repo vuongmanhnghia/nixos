@@ -43,7 +43,7 @@ return {
 					{ name = "pylsp" },
 					{ name = "gci" },
 					{ name = "ts_ls" },
-					{ name = "gopls" },
+					-- { name = "gopls" },
 					{ name = "nix" },
 					{ name = "buf_ls" },
 					{ name = "render-markdown" },

@@ -138,3 +138,67 @@ vim.api.nvim_create_user_command("ShowTree", function()
 end, {})
 
 vim.keymap.set("n", "<leader>vt", ":ShowTree<CR>", { desc = "Show directory tree in floating window" })
+
+-- C++ compile and run function
+local function compile_and_run_cpp()
+	local file = vim.fn.expand("%:p")
+	local filename = vim.fn.expand("%:t:r")
+	local filetype = vim.bo.filetype
+	
+	if filetype ~= "cpp" and filetype ~= "c" then
+		print("Not a C/C++ file!")
+		return
+	end
+
+	-- Save file first
+	vim.cmd("write")
+	
+	-- Create a floating terminal window
+	local buf = vim.api.nvim_create_buf(false, true)
+	local editor_width = vim.o.columns
+	local editor_height = vim.o.lines
+	local width = math.floor(editor_width * 0.8)
+	local height = math.floor(editor_height * 0.8)
+
+	local row = math.floor((editor_height - height) / 2)
+	local col = math.floor((editor_width - width) / 2)
+	local opts = {
+		relative = "editor",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+		border = "rounded",
+		style = "minimal",
+	}
+
+	local win = vim.api.nvim_open_win(buf, true, opts)
+	
+	-- Compile and run command
+	local compile_cmd
+	if filetype == "cpp" then
+		compile_cmd = string.format("g++ -std=c++17 -Wall -g '%s' -o '%s' && echo '=== Running %s ===' && './%s'; echo ''; echo 'Press q to close this window'", 
+			file, filename, filename, filename)
+	else
+		compile_cmd = string.format("gcc -Wall -g '%s' -o '%s' && echo '=== Running %s ===' && './%s'; echo ''; echo 'Press q to close this window'", 
+			file, filename, filename, filename)
+	end
+	
+	-- Start terminal
+	local term_id = vim.fn.termopen(compile_cmd, {
+		cwd = vim.fn.expand("%:h"),
+	})
+	
+	-- Set buffer to terminal mode
+	vim.bo[buf].buftype = "terminal"
+	
+	-- Set keymaps for this buffer
+	vim.keymap.set('n', 'q', '<cmd>bd!<CR>', { buffer = buf, noremap = true, silent = true })
+	vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { buffer = buf, noremap = true, silent = true })
+	
+	-- Enter terminal mode immediately
+	vim.cmd("startinsert")
+end
+
+-- Keymap for C++ compile and run
+vim.keymap.set("n", "<leader>cr", compile_and_run_cpp, { desc = "Compile and run C/C++ file" })

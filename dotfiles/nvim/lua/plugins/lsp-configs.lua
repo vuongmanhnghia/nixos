@@ -12,7 +12,7 @@ return {
 		opts = {
 			auto_install = true,
 			-- manually install packages that do not exist in this list please
-			ensure_installed = { "lua_ls", "zls", "gopls", "ts_ls" },
+			ensure_installed = { "lua_ls", "zls", "ts_ls" },
 		},
 	},
 	{
@@ -62,6 +62,22 @@ return {
 			-- golang
 			lspconfig.gopls.setup({
 				capabilities = capabilities,
+				cmd = { "/run/current-system/sw/bin/gopls" },
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+						},
+						staticcheck = true,
+						gofumpt = true,
+					},
+				},
+			})
+			-- C++ (using system clangd for NixOS compatibility)
+			lspconfig.clangd.setup({
+				capabilities = capabilities,
+				cmd = { "/run/current-system/sw/bin/clangd", "--background-index", "--clang-tidy" },
+				filetypes = { "c", "cpp", "objc", "objcpp" },
 			})
 			--java
 			-- lspconfig.jdtls.setup({
@@ -118,6 +134,8 @@ return {
 					java = "class",
 					lua = "function",
 					go = { "method", "struct", "interface" },
+					cpp = "function",
+					c = "function",
 				}
 				local symbols = symbols_map[filetype] or "function"
 				require("fzf-lua").lsp_document_symbols({ symbols = symbols })
