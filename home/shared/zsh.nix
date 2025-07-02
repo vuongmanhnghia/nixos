@@ -93,6 +93,7 @@
       gst = "git status";
       
       # === SYSTEM MANAGEMENT (Enhanced) ===
+      oh = "cd ~/ && echo 'Went back home'";
       config = "cd ~/Workspaces/Config/nixos";
       nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
       nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
