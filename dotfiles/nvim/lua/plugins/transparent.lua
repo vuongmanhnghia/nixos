@@ -7,7 +7,9 @@ return {
 				"Normal",
 				"NormalNC",
 				"TelescopeBorder",
-				-- "NvimTreeNormal",
+				"NeoTreeNormal",
+    			"NeoTreeNormalNC",
+    			"NeoTreeEndOfBuffer",
 				"LualineNormal",
 				"FzfLuaBorder",
 				"FzfLuaNormal",
@@ -17,7 +19,7 @@ return {
 				"FzfLuaPreviewTitle",
 			},
 		})
-		-- require("transparent").clear_prefix("NeoTree")
+		require("transparent").clear_prefix("NeoTree")
 		require("transparent").clear_prefix("lualine")
 		-- depends on pc, these settings are needed
 		vim.cmd("highlight Normal guibg=NONE")

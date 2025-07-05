@@ -23,6 +23,15 @@ return {
 					"theHamsta/nvim-dap-virtual-text", -- recommended
 				},
 			},
+			-- Python test adapter
+			{
+				"nvim-neotest/neotest-python",
+				ft = "python",
+				dependencies = {
+					"nvim-neotest/nvim-nio",
+					"nvim-lua/plenary.nvim",
+				},
+			},
 		},
 		config = function()
 			require("neotest").setup({
@@ -42,6 +51,27 @@ return {
 					require("neotest-zig")({
 						dap = {
 							adapter = "lldb",
+						},
+					}),
+					-- Python test adapter
+					require("neotest-python")({
+						-- Customize the command used to run tests
+						runner = "pytest", -- or "unittest", "nose2"
+						-- Customize the command arguments
+						args = { "--tb=short", "--quiet" },
+						-- Customize the environment
+						env = {
+							-- Add any environment variables here
+							-- PYTHONPATH = "${workspaceFolder}",
+						},
+						-- Customize the test discovery
+						dap = {
+							-- Enable DAP integration for debugging tests
+							enabled = true,
+							-- Customize DAP configuration
+							config = {
+								-- Add any DAP configuration here
+							},
 						},
 					}),
 				},

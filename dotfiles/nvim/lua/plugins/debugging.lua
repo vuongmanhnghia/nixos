@@ -4,10 +4,17 @@ return {
 		"rcarriga/nvim-dap-ui", 
 		"nvim-neotest/nvim-nio", 
 		"leoluz/nvim-dap-go",
+		"mfussenegger/nvim-dap-python",
 	},
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
 		require("dap-go").setup()
+		
+		-- Setup Python debug adapter
+		require("dap-python").setup("python", {
+			-- Use system Python or specify path
+			-- pythonPath = "/usr/bin/python3",
+		})
 		
 		-- Simple DAP UI setup
 		require("dapui").setup({
@@ -76,6 +83,45 @@ return {
 		-- C configuration (same as C++)
 		dap.configurations.c = dap.configurations.cpp
 
+		-- Python debugging configuration
+		dap.configurations.python = {
+			{
+				name = "Launch Python File",
+				type = "python",
+				request = "launch",
+				program = "${file}",
+				console = "integratedTerminal",
+				justMyCode = true,
+			},
+			{
+				name = "Launch Python Module",
+				type = "python",
+				request = "launch",
+				module = function()
+					return vim.fn.input("Module name: ")
+				end,
+				console = "integratedTerminal",
+				justMyCode = true,
+			},
+			{
+				name = "Attach to Process",
+				type = "python",
+				request = "attach",
+				processId = function()
+					return vim.fn.input("Process ID: ")
+				end,
+				justMyCode = true,
+			},
+			{
+				name = "Debug Current File",
+				type = "python",
+				request = "launch",
+				program = "${file}",
+				console = "integratedTerminal",
+				justMyCode = false, -- Include library code
+			},
+		}
+
 		-- Auto open/close UI
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
@@ -138,3 +184,4 @@ return {
 -- 2. Compile with debug symbols: g++ -g -o program program.cpp  
 -- 3. If CodeLLDB fails, GDB will be used as fallback
 -- 4. Use <Leader>di to check debug adapter status
+-- 5. For Python: Install debugpy: pip install debugpy

@@ -1,3 +1,4 @@
+-- floating terminal in neovim
 local state = { floating = { buf = -1, win = -1 } }
 local function create_floating_window(opts)
     opts = opts or {}

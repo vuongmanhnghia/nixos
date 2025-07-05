@@ -33,6 +33,7 @@
     
     # === PRODUCTIVITY AND CONTENT CREATION ===
     obsidian       # Note-taking and knowledge management application
+    zoom-us
     obs-studio     # Open Broadcaster Software for streaming and recording
   ];
   

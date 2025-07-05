@@ -11,6 +11,7 @@
       noto-fonts-cjk-sans     # Chinese, Japanese, Korean sans-serif fonts
       noto-fonts-cjk-serif    # Chinese, Japanese, Korean serif fonts
       noto-fonts-emoji        # Emoji font support
+      font-awesome 
       liberation_ttf          # Liberation fonts (metric-compatible with Microsoft fonts)
       dejavu_fonts            # DejaVu font family (good Unicode coverage)
       

@@ -22,6 +22,7 @@ return {
 				"java",
 				"json",
 				"zig",
+				"python",
 			},
 			sync_install = false,
 			highlight = { enable = true },

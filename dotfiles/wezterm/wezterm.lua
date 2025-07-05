@@ -26,7 +26,7 @@ local function pick_random_background(folder)
 	return nil
 end
 
-local bg_image = background_folder .. "/bg.jpg"
+local bg_image = background_folder .. "/bg.png"
 config.window_background_image = bg_image
 config.window_background_image_hsb = {
 	brightness = brightness,
@@ -37,13 +37,18 @@ config.window_background_image_hsb = {
 -- === APPEARANCE ===
 config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
-	-- === MACOS-STYLE MONOSPACE FONTS ===
-	{ family = "RobotoMono Nerd Font", weight = "Regular" },        -- macOS-like monospace with icons
-	{ family = "Roboto Mono", weight = "Regular" },                 -- Clean macOS-style monospace
-	{ family = "Inter", weight = "Regular" },                       -- Modern system font (closest to San Francisco)
-	{ family = "MesloLGS Nerd Font", weight = "Regular" },          -- For Powerlevel10k compatibility
-	{ family = "JetBrainsMono Nerd Font", weight = "Regular" },     -- Programming font with ligatures
-	{ family = "Inconsolata Nerd Font Mono", weight = "Regular" },  -- Fallback
+	{ family = "RobotoMono Nerd Font", weight = "Regular" },
+	{ family = "Roboto Mono", weight = "Regular" },
+	{ family = "Inter", weight = "Regular" },
+	{ family = "MesloLGS Nerd Font", weight = "Regular" },
+	{ family = "JetBrainsMono Nerd Font", weight = "Regular" },
+	{ family = "Inconsolata Nerd Font Mono", weight = "Regular" },
+	{ family = "Noto Sans", weight = "Regular" },
+	{ family = "Noto Sans Symbols", weight = "Regular" },
+	{ family = "Noto Color Emoji", weight = "Regular" },
+	{ family = "Symbols Nerd Font", weight = "Regular" },
+	{ family = "Font Awesome 6 Free", weight = "Regular" },
+	{ family = "Liberation Mono", weight = "Regular" },
 })
 config.font_size = 12.0
 config.line_height = 1.1  -- Better line spacing for icons

@@ -75,6 +75,33 @@
     nodejs   # Node.js JavaScript runtime for web development
     python3  # Python 3 interpreter for scripting and development
     
+    # === PYTHON DEVELOPMENT ECOSYSTEM ===
+    # Core Python packages for development
+    python3Packages.pip          # Python package installer
+    python3Packages.setuptools   # Python package development utilities
+    python3Packages.wheel        # Built-package format for Python
+    
+    # Python development and testing tools
+    python3Packages.debugpy      # Python debugger for VS Code and other IDEs
+    python3Packages.pytest       # Testing framework for Python
+    python3Packages.pytest-cov   # Coverage plugin for pytest
+    python3Packages.pytest-mock  # Mocking plugin for pytest
+    python3Packages.pytest-asyncio # Async support for pytest
+    
+    # Python code formatting and linting
+    python3Packages.black        # Uncompromising Python code formatter
+    python3Packages.isort        # Python import sorter
+    python3Packages.flake8       # Python linter for style guide enforcement
+    python3Packages.mypy         # Static type checker for Python
+    python3Packages.autopep8     # Automatic Python code formatter
+    python3Packages.pylint       # Python code analysis tool
+    
+    # Python development utilities
+    python3Packages.ipython      # Enhanced interactive Python shell
+    python3Packages.jupyter      # Jupyter notebook environment
+    python3Packages.virtualenv   # Virtual environment manager
+    poetry                       # Python dependency management and packaging
+    
     # === C++ DEVELOPMENT ECOSYSTEM ===
     # Core compilers and build systems
     gcc         # GNU Compiler Collection for C/C++

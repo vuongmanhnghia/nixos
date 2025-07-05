@@ -40,7 +40,7 @@ return {
 					{ name = "zls" },
 					{ name = "buffer" },
 					{ name = "path" },
-					{ name = "pylsp" },
+					{ name = "pyright" },
 					{ name = "gci" },
 					{ name = "ts_ls" },
 					-- { name = "gopls" },

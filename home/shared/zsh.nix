@@ -111,7 +111,7 @@
       wsp = "cd ~/Workspaces";
       web = "cd ~/Workspaces/Web";
       app = "cd ~/Workspaces/App";
-      lc = "cd ~/Workspaces/LeetCode";
+      lc = "cd ~/Workspaces/leetcode";
       docs = "cd ~/Documents";
       down = "cd ~/Downloads";
       

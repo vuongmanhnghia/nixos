@@ -12,7 +12,7 @@ return {
 		opts = {
 			auto_install = true,
 			-- manually install packages that do not exist in this list please
-			ensure_installed = { "lua_ls", "zls", "ts_ls" },
+			ensure_installed = { "lua_ls", "zls", "ts_ls", "pyright" },
 		},
 	},
 	{
@@ -112,7 +112,19 @@ return {
 				end,
 			})
 			-- python
-			lspconfig.pylsp.setup({ capabilities = capabilities })
+			lspconfig.pyright.setup({
+				capabilities = capabilities,
+				settings = {
+				python = {
+					analysis = {
+						typeCheckingMode = "basic", -- hoặc "strict" để kiểm tra mạnh hơn
+						autoSearchPaths = true,
+						useLibraryCodeForTypes = true,
+						diagnosticMode = "workspace", -- hoặc "openFilesOnly"
+						}
+					}
+				}
+			})
 			-- bash
 			lspconfig.bashls.setup({ capabilities = capabilities })
 			-- lsp kepmap setting
