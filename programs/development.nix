@@ -35,6 +35,7 @@
     wget     # Network downloader for retrieving files from servers
     tree     # Display directory structures in tree format
     htop     # Interactive process viewer and system monitor
+    termius
     
     # === MODERN CLI REPLACEMENTS ===
     ripgrep  # Fast text search tool (better grep replacement)

@@ -10,6 +10,7 @@ fi
 # The list of segments shown on the left. Fill it with the most important segments.
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   prompt_char           # prompt symbol
+  virtualenv            # python virtual environment
   dir                   # current directory
   vcs                   # git info
 )
@@ -19,7 +20,6 @@ typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   status                      # exit code of the last command
   command_execution_time      # duration of the last command
   background_jobs             # presence of background jobs
-  virtualenv                  # python virtual environment
 )
 
 # === LEAN STYLE CONFIGURATION ===
@@ -99,6 +99,9 @@ typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND=
 typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
 typeset -g POWERLEVEL9K_VIRTUALENV_LEFT_DELIMITER='('
 typeset -g POWERLEVEL9K_VIRTUALENV_RIGHT_DELIMITER=')'
+typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYTHON=false
+typeset -g POWERLEVEL9K_VIRTUALENV_USE_PYTHON_VERSION=false
+typeset -g POWERLEVEL9K_VIRTUALENV_CONTENT_EXPANSION='(${VIRTUAL_ENV:t})'
 
 # === PERFORMANCE & FEATURES ===
 typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always

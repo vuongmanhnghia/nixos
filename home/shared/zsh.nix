@@ -106,6 +106,7 @@
       tml = "tmux list-sessions";
       tmk = "tmux kill-session -t";
       tmd = "tmux detach";
+      tmcls = "rm -rf ~/.tmux/resurrect/*";
       
       # === DEVELOPMENT SHORTCUTS ===
       wsp = "cd ~/Workspaces";
