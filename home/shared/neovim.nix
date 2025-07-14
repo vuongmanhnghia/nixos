@@ -12,7 +12,6 @@
       # Language servers
       lua-language-server
       nil # Nix LSP
-      gopls
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted # HTML, CSS, JSON, ESLint
       python3Packages.python-lsp-server
@@ -99,7 +98,6 @@
     # gcc
     # nodejs
     # python3
-    # go
     # rustc
     # cargo
     

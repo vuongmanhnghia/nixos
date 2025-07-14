@@ -75,6 +75,10 @@
     # === PROGRAMMING LANGUAGE RUNTIMES ===
     nodejs   # Node.js JavaScript runtime for web development
     python3  # Python 3 interpreter for scripting and development
+
+    # === DATABASE ===
+    mongodb-compass
+    mongodb-tools
     
     # === PYTHON DEVELOPMENT ECOSYSTEM ===
     # Core Python packages for development
