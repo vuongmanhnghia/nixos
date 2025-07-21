@@ -15,26 +15,22 @@
     gnome-shell-extensions    # Shell extension framework
     
     # === ESSENTIAL PRODUCTIVITY EXTENSIONS ===
-    gnomeExtensions.appindicator        # System tray support for legacy applications
+    # gnomeExtensions.appindicator        # System tray support for legacy applications
     gnomeExtensions.dash-to-dock        # Dock at bottom like macOS/Ubuntu
     gnomeExtensions.user-themes         # Custom theme support
-    gnomeExtensions.system-monitor-next # Modern system stats (replaces vitals)
     gnomeExtensions.clipboard-indicator # Clipboard history management
     gnomeExtensions.hidden-input-method-panel # Input method panel for Fcitx5 on Wayland (kimpanel protocol)
     
     # === MODERN UI/UX ENHANCEMENTS ===
     gnomeExtensions.caffeine            # Prevent system sleep on demand
     gnomeExtensions.just-perfection     # Customize shell elements visibility
-    gnomeExtensions.workspace-indicator # Workspace switching indicator
     gnomeExtensions.night-theme-switcher # Auto dark/light theme switching
-    gnomeExtensions.alphabetical-app-grid # Auto-sort application grid alphabetically
     gnomeExtensions.rounded-corners # Modern rounded corners aesthetic
     gnomeExtensions.blur-my-shell       # Advanced blur and transparency effects
     
     # === CORE GNOME APPLICATIONS ===
     nautilus                  # File manager with modern features
     gnome-calendar            # Calendar with online account integration
-    gnome-system-monitor      # System resource monitor
     gnome-disk-utility        # Disk partitioning and management
     file-roller               # Archive manager for compressed files
     
@@ -396,7 +392,6 @@
             "appindicator@rgcjonas.gmail.com"
             "dash-to-dock@micxgx.gmail.com" 
             "user-theme@gnome-shell-extensions.gcampax.github.com"
-            "system-monitor-next@paradoxxx.zero.gmail.com"
             "clipboard-indicator@tudmotu.com"
             "kimpanel@kde.org"                                                # Input method panel for Fcitx5
             "night-theme-switcher@romainvigier.fr"

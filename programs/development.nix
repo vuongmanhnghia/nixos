@@ -125,6 +125,8 @@
     lshw      # List hardware information
     pciutils  # PCI bus utilities (lspci)
     usbutils  # USB utilities (lsusb)
+
+    burpsuite   
   ];
 
   # === USER PERMISSIONS ===

@@ -50,8 +50,8 @@ config.font = wezterm.font_with_fallback({
 	{ family = "Font Awesome 6 Free", weight = "Regular" },
 	{ family = "Liberation Mono", weight = "Regular" },
 })
-config.font_size = 12.0
-config.line_height = 1.1  -- Better line spacing for icons
+config.font_size = 13.0
+config.line_height = 1.15  -- Better line spacing for icons
 config.default_cursor_style = "BlinkingUnderline"
 config.cursor_thickness = 2
 

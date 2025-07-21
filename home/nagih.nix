@@ -20,6 +20,7 @@
   # === USER-SPECIFIC APPLICATIONS ===
   home.packages = with pkgs; [
     # === PERSONAL PRODUCTIVITY APPLICATIONS ===
+    firefox        # Firefox web browser
     google-chrome  # Google Chrome web browser
     discord        # Discord chat and communication platform
     spotify        # Spotify music streaming service

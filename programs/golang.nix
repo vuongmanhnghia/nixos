@@ -19,8 +19,7 @@
     
     # Code formatting and linting
     gofumpt                     # Stricter gofmt
-    goimports                   # Auto-import management
-    gotools                     # Additional Go tools (guru, gorename, etc.)
+    gotools                     # Additional Go tools (includes goimports, guru, gorename, etc.)
     
     # Build and dependency management
     go-migrate                  # Database migration tool
