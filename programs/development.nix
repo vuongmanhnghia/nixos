@@ -29,6 +29,10 @@
     # === CODE EDITORS AND IDEs ===
     neovim   # Modern Vim-based text editor with LSP support
     
+    # === CONTAINERIZATION TOOLS ===
+    docker-compose   # Tool for defining and running multi-container Docker applications
+    tailscale
+    
     # === TERMINAL MULTIPLEXER AND UTILITIES ===
     tmux     # Terminal multiplexer for managing multiple terminal sessions
     curl     # Command-line tool for data transfer with URLs
@@ -127,6 +131,7 @@
     usbutils  # USB utilities (lsusb)
 
     burpsuite   
+    postman
   ];
 
   # === USER PERMISSIONS ===
