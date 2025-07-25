@@ -132,6 +132,7 @@
 
     burpsuite   
     postman
+    claude-code
   ];
 
   # === USER PERMISSIONS ===

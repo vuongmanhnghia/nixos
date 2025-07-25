@@ -207,7 +207,7 @@
     
     # === ENVIRONMENT CLEANUP (SAFE OPTIMIZATION) ===
     EDITOR = "nvim";                    # Default editor
-    BROWSER = "google-chrome";          # Default browser
+    BROWSER = "firefox";          # Default browser
     TERMINAL = "gnome-terminal";        # Default terminal
     
     # Performance (safe):
