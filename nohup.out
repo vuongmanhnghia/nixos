@@ -1,0 +1,50 @@
+[3664:0727/152015.948343:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[3664:0727/152015.948366:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
+Warning: 'update' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'ozone-platform-hint' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'enable-features' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'enable-wayland-ime' is not in the list of known options, but still passed to Electron/Chromium.
+[90m[main 2025-07-27T08:20:16.135Z][0m updateURL https://api2.cursor.sh/updates/api/update/linux-x64/cursor/0.49.6/ff0100a75341bffd8f368fdbfc42ba6d0090654e5884ca0161e8cdb28c2ba1ae/stable
+[90m[main 2025-07-27T08:20:16.136Z][0m update#setState idle
+Error: Cannot find module './build/Debug/keymapping'
+Require stack:
+- /nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1232:15)
+    at s._resolveFilename (node:electron/js2c/browser_init:2:124485)
+    at Module._load (node:internal/modules/cjs/loader:1058:27)
+    at c._load (node:electron/js2c/node_init:2:16955)
+    at Module.require (node:internal/modules/cjs/loader:1318:19)
+    at require (node:internal/modules/helpers:179:18)
+    at NativeBinding._init (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:19:24)
+    at NativeBinding.getKeyMap (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:24:10)
+    at exports.getKeyMap (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:63:18)
+    at F2 (file:///nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/out/main.js:53:28784)
+    at Fh.g (file:///nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/out/main.js:53:29301) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js'
+  ]
+}
+TypeError: Cannot read properties of null (reading 'getCurrentKeyboardLayout')
+    at NativeBinding.getCurrentKeyboardLayout (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:34:29)
+    at exports.getCurrentKeyboardLayout (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:60:18)
+    at F2 (file:///nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/out/main.js:53:28800)
+    at Fh.g (file:///nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/out/main.js:53:29301)
+TypeError: Cannot read properties of null (reading 'onDidChangeKeyboardLayout')
+    at NativeBinding.onDidChangeKeyboardLayout (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:43:22)
+    at exports.onDidChangeKeyboardLayout (/nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/node_modules/native-keymap/index.js:66:18)
+    at Fh.g (file:///nix/store/0s56jcl04q77aq6kfx69iasnlzr6k1xp-cursor-0.49.6-extracted/usr/share/cursor/resources/app/out/main.js:53:29313)
+[3715:0727/152017.023371:ERROR:gles2_cmd_decoder_passthrough.cc(1093)] [GroupMarkerNotSet(crbug.com/242999)!:A0201E00641E0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.
+[3715:0727/152019.339342:ERROR:gles2_cmd_decoder_passthrough.cc(1093)] [GroupMarkerNotSet(crbug.com/242999)!:A0201E00641E0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.
+[3715:0727/152019.459489:ERROR:gl_utils.cc(425)] [.WebGL-0x3bd40b53ea00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[3715:0727/152019.517653:ERROR:gl_utils.cc(425)] [.WebGL-0x3bd40b53ea00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[3715:0727/152019.639643:ERROR:gl_utils.cc(425)] [.WebGL-0x3bd40b53ea00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[3715:0727/152022.063671:ERROR:gl_utils.cc(425)] [.WebGL-0x3bd40b53ea00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[90m[main 2025-07-27T08:20:46.137Z][0m update#setState checking for updates
+[90m[main 2025-07-27T08:20:46.394Z][0m update#setState available for download
+[91m[main 2025-07-27T08:20:51.273Z][0m [UtilityProcess id: 1, type: fileWatcher, pid: 3867]: crashed with code 15 and reason 'killed'
+[90m[main 2025-07-27T08:20:51.977Z][0m Extension host with pid 3876 exited with code: 0, signal: unknown.
+[3664:0727/152051.986880:ERROR:wayland_event_watcher.cc(47)] libwayland: warning: queue 0x2ab400b6fd40 destroyed while proxies still attached:
+
+[3664:0727/152051.987978:ERROR:wayland_event_watcher.cc(47)] libwayland:   wl_shm_pool#48 still attached
+

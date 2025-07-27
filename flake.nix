@@ -10,15 +10,21 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs"; # Use same nixpkgs as system
     };
+    
+    # Hyprland - latest stable
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, hyprland, ... }: {
     nixosConfigurations = {
       # Main system configuration
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux"; # Target architecture
         modules = [
           ./configuration.nix # Main system configuration
+          
+          # Hyprland module
+          hyprland.nixosModules.default
 
           home-manager.nixosModules.home-manager # Home Manager integration
           {

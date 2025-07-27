@@ -3,7 +3,8 @@
 {
   # === IMPORT SHARED CONFIGURATION ===
   imports = [ 
-    ./default.nix   # Import shared home configuration for all users
+    ./default.nix         # Import shared home configuration for all users
+    ./shared/hyprland.nix # Import basic Hyprland configuration
   ];
 
   # === USER INFORMATION ===
@@ -79,11 +80,17 @@
   home.activation.createSyncDirs = config.lib.dag.entryAfter ["writeBoundary"] ''
     mkdir -p $HOME/Documents   # Create Documents directory if it doesn't exist
     mkdir -p $HOME/Workspaces  # Create Workspaces directory if it doesn't exist
+    mkdir -p $HOME/Pictures/Screenshots  # Create Screenshots directory for Hyprland
   '';
 
   # === USER-SPECIFIC ENVIRONMENT VARIABLES ===
   home.sessionVariables = {
     DOWNLOAD_DIR = "${config.home.homeDirectory}/Downloads";  # Downloads directory path
     DOCUMENTS_DIR = "${config.home.homeDirectory}/Documents"; # Documents directory path
+    
+    # === HYPRLAND SPECIFIC ===
+    TERMINAL = "ghostty";                                      # Default terminal
+    BROWSER = "firefox";                                       # Default browser  
+    EDITOR = "nvim";                                          # Default editor
   };
 }

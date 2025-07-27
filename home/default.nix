@@ -6,12 +6,14 @@
   imports = [
     ./shared/fonts.nix           # Fonts
     ./shared/git.nix             # Git version control configuration
-    ./shared/bash.nix            # Bash shell with aliases and modern CLI tools
     ./shared/zsh.nix             # Zsh shell with aliases and modern CLI tools
     ./shared/tmux.nix            # Terminal multiplexer configuration
-    ./shared/wezterm.nix         # WezTerm terminal emulator configuration
-    ./shared/gnome.nix           # GNOME desktop user settings and themes
     ./shared/neovim.nix          # Neovim editor configuration with LSP
+    ./shared/waybar.nix          # Waybar status bar configuration
+    ./shared/gtk-theme.nix       # GTK theme configuration (Phase 2)
+    ./shared/viegphunt-scripts.nix # ViegPhunt scripts (Phase 2)
+    ./shared/wlogout.nix
+    ./shared/swaync.nix
   ];
 
   # === ESSENTIAL PACKAGES FOR ALL USERS ===
@@ -44,6 +46,8 @@
     
     # SSH agent configuration for key management
     extraConfig = ''
+      AddKeysToAgent yes  # Automatically add SSH keys to agent
+      IdentityFile ~/.ssh/id_ed25519  # Default SSH key file
       Host *
         AddKeysToAgent yes  # Automatically add SSH keys to agent
     '';
