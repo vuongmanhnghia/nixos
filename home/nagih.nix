@@ -4,7 +4,6 @@
   # === IMPORT SHARED CONFIGURATION ===
   imports = [ 
     ./default.nix         # Import shared home configuration for all users
-    ./shared/hyprland.nix # Import basic Hyprland configuration
   ];
 
   # === USER INFORMATION ===
@@ -89,7 +88,7 @@
     DOCUMENTS_DIR = "${config.home.homeDirectory}/Documents"; # Documents directory path
     
     # === HYPRLAND SPECIFIC ===
-    TERMINAL = "ghostty";                                      # Default terminal
+    TERMINAL = "kitty";                                      # Default terminal
     BROWSER = "firefox";                                       # Default browser  
     EDITOR = "nvim";                                          # Default editor
   };

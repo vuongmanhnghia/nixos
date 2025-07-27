@@ -1,10 +1,5 @@
-font-family = JetBrainsMono Nerd Font
-font-size = 13
-
+font-family = JetBrainsMono\ NF\ Bold
+font-size = 12
+background-opacity = 0.9
 theme = catppuccin-mocha
-background-opacity = 0.8
-
-keybind = ctrl+shift+v=ignore
-keybind = performable:ctrl+v=paste_from_clipboard
-keybind = ctrl+shift+c=ignore
-keybind = performable:ctrl+c=copy_to_clipboard
+# Animated cursor, confirm_os_window_close, cursor_trail, linux_display_server, wheel_scroll_min_lines are not directly supported in ghostty or require different handling.

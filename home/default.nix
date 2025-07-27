@@ -4,15 +4,16 @@
   # === SHARED HOME MANAGER CONFIGURATIONS ===
   # Import common configurations used by all users
   imports = [
+    ./shared/hypr/default.nix    # Hyprland configuration
+    ./shared/matugen/default.nix # Matugen configuration
+    ./shared/waybar/default.nix  # Waybar configuration
+    ./shared/swaync/default.nix  # Swaync configuration
     ./shared/fonts.nix           # Fonts
     ./shared/git.nix             # Git version control configuration
     ./shared/zsh.nix             # Zsh shell with aliases and modern CLI tools
     ./shared/neovim.nix          # Neovim editor configuration with LSP
-    ./shared/waybar.nix          # Waybar status bar configuration
     ./shared/gtk-theme.nix       # GTK theme configuration (Phase 2)
-    ./shared/viegphunt-scripts.nix # ViegPhunt scripts (Phase 2)
-    ./shared/wlogout.nix
-    ./shared/swaync.nix
+    ./shared/kitty.nix           # Kitty terminal configuration
   ];
 
   # === ESSENTIAL PACKAGES FOR ALL USERS ===
@@ -39,6 +40,24 @@
     wl-clipboard  # Wayland clipboard utilities (wl-copy, wl-paste)
   ];
 
+  # === WLOUT CONFIGURATION ===
+  home.file.".config/wlogout" = {
+    source = ../dotfiles/wlogout;
+    recursive = true;
+  };
+
+  #  === ROFI CONFIGURATION ===
+  home.file.".config/rofi" = {
+    source = ../dotfiles/rofi;
+    recursive = true;
+  };
+
+  # === FASTFETCH CONFIGURATION ===
+  home.file.".config/fastfetch" = {
+    source = ../dotfiles/fastfetch;
+    recursive = true;
+  };
+
   # === TMUX CONFIGURATION ===
   programs.tmux = {
     enable = true;
@@ -56,6 +75,11 @@
     executable = true;
   };
 
+  # === CAVA CONFIGURATION ===
+  home.file.".config/cava/config" = {
+    source = ../dotfiles/cava/config;
+  };
+
   # === SSH CONFIGURATION ===
   programs.ssh = {
     enable = true;  # Enable SSH client
@@ -67,16 +91,6 @@
       Host *
         AddKeysToAgent yes  # Automatically add SSH keys to agent
     '';
-  };
-
-  # === GHOSTTY CONFIGURATION ===
-  home.file.".config/ghostty/config" = {
-    source = ../dotfiles/ghostty/config;
-  };
-
-  # === CAVA CONFIGURATION ===
-  home.file.".config/cava/config" = {
-    source = ../dotfiles/cava/config;
   };
 
   # === HOME MANAGER VERSION ===

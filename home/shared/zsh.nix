@@ -145,7 +145,7 @@
     };
 
     # === ADVANCED ZSH CONFIGURATION ===
-    initExtra = ''
+    initContent = ''
       # === POWERLEVEL10K INSTANT PROMPT ===
       # Enable instant prompt but suppress warnings to fix console output issue
       if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then

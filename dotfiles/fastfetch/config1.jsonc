@@ -1,0 +1,71 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+    	"source": "arch_small",
+    	"height": 10,
+    	"padding": {
+    		"top": 1,
+    		"left": 2,
+    		"bottom": 1,
+    		"right": 2,
+    	}
+    },
+    "display": {
+        "separator": " "
+    },
+    "modules": [
+        {
+            "key": "╭───────────╮",
+            "type": "custom"
+        },
+        {
+            "key": "│ {#32}󰇅 os      {#keys}│",
+            "type": "os",
+        },
+        {
+            "key": "│ {#33}󰨇 de      {#keys}│",
+            "type": "wm"
+        },
+     
+        {
+            "key": "│ {#35} pkgs    {#keys}│",
+            "type": "packages",
+            "format": "{} (pacman)",
+        },
+        {
+            "key": "│ {#32} shell   {#keys}│",
+            "type": "shell"
+        },
+        {
+            "key": "│ {#33}󰍛 kernel  {#keys}│",
+            "type": "kernel",
+        },
+        {
+            "key": "│ {#34} uptime  {#keys}│",
+            "type": "uptime",
+            "format": "{2}h {3}m",
+        },
+        {
+            "key": "│ {#35}󰔟 os age  {#keys}│",
+            "type": "command",
+            "text": "birth_install=$(stat -c %W /); current=$(date +%s);    days_difference=$(( (current - birth_install) / 86400 )); echo $days_difference days",
+        },
+        {
+            "key": "│ {#36} memory  {#keys}│",
+            "type": "memory",
+        },
+        {
+            "key": "├───────────┤",
+            "type": "custom"
+        },
+        {
+            "key": "│ {#39} colors  {#keys}│",
+            "type": "colors",
+            "symbol": "circle"
+        },
+        {
+            "key": "╰───────────╯",
+            "type": "custom"
+        }
+    ]
+}
