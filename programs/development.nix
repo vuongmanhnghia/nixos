@@ -40,6 +40,7 @@
     tree     # Display directory structures in tree format
     htop     # Interactive process viewer and system monitor
     termius
+    inetutils  # Network utilities (ping, traceroute, etc.)
     
     # === MODERN CLI REPLACEMENTS ===
     ripgrep  # Fast text search tool (better grep replacement)

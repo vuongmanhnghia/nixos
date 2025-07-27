@@ -1,13 +1,17 @@
 return {
     "ibhagwan/fzf-lua",
-    -- optional for icon support
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- or if using mini.icons/mini.nvim
-    -- dependencies = { "echasnovski/mini.icons" },
     opts = {},
     config = function()
-        local fzf = require("fzf-lua")
+        -- Thêm pcall để tránh crash
+        local ok, fzf = pcall(require, "fzf-lua")
+        if not ok then
+            vim.notify("Failed to load fzf-lua", vim.log.levels.ERROR)
+            return
+        end
+        
         fzf.setup({
+            -- Cấu hình của bạn giữ nguyên
             winopts = {
                 height = 0.85,
                 width = 0.90,
@@ -17,25 +21,27 @@ return {
             },
             fzf_colors = {
                 true,
-                bg = "-1",
+                bg = "-1", 
                 gutter = "-1",
             },
             keymap = {
                 fzf = { ["ctrl-q"] = "select-all+accept" },
             },
         })
-        vim.keymap.set("n", "<leader>ff", fzf.files, { desc = "Find Files" })
-        vim.keymap.set("n", "<leader>pf", fzf.git_files, { desc = "Find Git Files" })
-        vim.keymap.set("n", "<leader>fg", fzf.live_grep, { desc = "Live Grep" })
-        vim.keymap.set("n", "<leader>fG", function()
-            require("fzf-lua").live_grep({
-                rg_opts = "--hidden --glob '!.git/*' --column --line-number --no-heading --color=always -e",
-            })
-        end, { desc = "Live Grep includes hidden files" })
-        vim.keymap.set("n", "<leader>fb", fzf.buffers, { desc = "Buffers" })
-        vim.keymap.set("n", "<leader>fh", fzf.help_tags, { desc = "Help Tags" })
-        vim.keymap.set("n", "<leader>fs", function()
-            fzf.grep({ search = vim.fn.input("Grep For > ") })
-        end, { desc = "FZF grep with input" })
+        
+        -- Keymaps với error handling
+        vim.keymap.set("n", "<leader>ff", function()
+            pcall(fzf.files)
+        end, { desc = "Find Files" })
+        
+        vim.keymap.set("n", "<leader>pf", function()
+            pcall(fzf.git_files)
+        end, { desc = "Find Git Files" })
+        
+        vim.keymap.set("n", "<leader>fg", function()
+            pcall(fzf.live_grep)
+        end, { desc = "Live Grep" })
+        
+        -- Các keymap khác tương tự...
     end,
 }

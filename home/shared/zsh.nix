@@ -98,6 +98,7 @@
       nixos-rebuild = "sudo nixos-rebuild switch --flake ~/Workspaces/Config/nixos";
       nixos-test = "sudo nixos-rebuild test --flake ~/Workspaces/Config/nixos";
       home-rebuild = "home-manager switch --flake ~/Workspaces/Config/nixos";
+      generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
       
       # === TMUX WORKFLOW (Enhanced) ===
       tm = "tmux";

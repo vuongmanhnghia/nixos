@@ -8,6 +8,20 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
+      -- Temporarily override vim.notify to suppress go.nvim warnings
+      local original_notify = vim.notify
+      vim.notify = function(msg, level, opts)
+        -- Suppress go.nvim LSP-related warnings
+        if type(msg) == "string" and (
+          msg:match("lsp_cfg is false") or 
+          msg:match("lsp_on_attach ignored") or
+          msg:match("max_line_len only effective when gofmt is golines")
+        ) then
+          return
+        end
+        return original_notify(msg, level, opts)
+      end
+      
       require("go").setup({
         -- Go debugging configuration
         goimports = "goimports",     -- goimports command
@@ -18,6 +32,8 @@ return {
         gotests_template = "",      -- gotests template
         gotests_template_dir = "",  -- gotests template directory
         comment_placeholder = '',   -- comment_placeholder your cool placeholder
+
+        verbose = false,           -- disable verbose output including lsp_cfg warnings
         
         -- LSP configuration
         lsp_cfg = false,           -- false: do nothing, true: apply non-default gopls setup
@@ -50,6 +66,9 @@ return {
         auto_format = true,        -- auto format on save
         auto_lint = true,         -- auto lint on save
       })
+      
+      -- Restore original vim.notify after setup
+      vim.notify = original_notify
       
       -- Go specific keymaps
       local function map(mode, lhs, rhs, opts)
