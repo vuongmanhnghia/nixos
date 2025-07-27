@@ -53,6 +53,11 @@
     '';
   };
 
+  # === CAVA CONFIGURATION ===
+  home.file.".config/cava/config" = {
+    source = ../../dotfiles/cava/config;
+  };
+
   # === HOME MANAGER VERSION ===
   home.stateVersion = "25.05";  # Should match your NixOS release version
 }

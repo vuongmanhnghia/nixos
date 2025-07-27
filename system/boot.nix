@@ -9,7 +9,7 @@
         enable = true;
         
         # Limit number of boot entries shown in menu (saves /boot space)
-        configurationLimit = 5;  # Show only 5 most recent configurations
+        configurationLimit = 10;  # Show only 5 most recent configurations
         
         # Allow editing kernel parameters at boot (security consideration)
         editor = false;  # Set to true if you need to edit boot parameters
