@@ -53,9 +53,14 @@
     '';
   };
 
+  # === GHOSTTY CONFIGURATION ===
+  home.file.".config/ghostty/config" = {
+    source = ../dotfiles/ghostty/config;
+  };
+
   # === CAVA CONFIGURATION ===
   home.file.".config/cava/config" = {
-    source = ../../dotfiles/cava/config;
+    source = ../dotfiles/cava/config;
   };
 
   # === HOME MANAGER VERSION ===
