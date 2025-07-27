@@ -7,7 +7,6 @@
     ./shared/fonts.nix           # Fonts
     ./shared/git.nix             # Git version control configuration
     ./shared/zsh.nix             # Zsh shell with aliases and modern CLI tools
-    ./shared/tmux.nix            # Terminal multiplexer configuration
     ./shared/neovim.nix          # Neovim editor configuration with LSP
     ./shared/waybar.nix          # Waybar status bar configuration
     ./shared/gtk-theme.nix       # GTK theme configuration (Phase 2)
@@ -39,6 +38,23 @@
     # === WAYLAND CLIPBOARD UTILITIES ===
     wl-clipboard  # Wayland clipboard utilities (wl-copy, wl-paste)
   ];
+
+  # === TMUX CONFIGURATION ===
+  programs.tmux = {
+    enable = true;
+    
+    # Use the existing tmux.conf file
+    extraConfig = builtins.readFile ../dotfiles/tmux/tmux.conf;
+    
+    # Enable plugins that are referenced in the config
+    plugins = with pkgs.tmuxPlugins; [
+      catppuccin
+    ];
+  };
+  home.file.".config/tmux/random_note.sh" = {
+    source = ../dotfiles/tmux/random_note.sh;
+    executable = true;
+  };
 
   # === SSH CONFIGURATION ===
   programs.ssh = {
