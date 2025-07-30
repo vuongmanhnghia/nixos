@@ -3,10 +3,10 @@
 
 {
   imports = [
-    ./config.nix
-    ./aliases.nix
-    ./service.nix
-    ./auto-wallpaper.nix
+    ./modules/config.nix
+    ./modules/aliases.nix
+    ./modules/service.nix
+    ./modules/auto-wallpaper.nix
   ];
 
   # Install matugen package

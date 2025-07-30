@@ -9,7 +9,6 @@
     ./shared/waybar/default.nix  # Waybar configuration
     ./shared/swaync/default.nix  # Swaync configuration
     ./shared/rofi/default.nix    # Rofi configuration
-    ./shared/fonts.nix           # Fonts
     ./shared/git.nix             # Git version control configuration
     ./shared/zsh.nix             # Zsh shell with aliases and modern CLI tools
     ./shared/neovim.nix          # Neovim editor configuration with LSP

@@ -58,12 +58,12 @@
     '';
 
     # Các template được đọc từ file riêng
-    ".config/matugen/templates/colors.css".source = ./templates/colors.css;
-    ".config/matugen/templates/gtk.css".source = ./templates/gtk.css;
-    ".config/matugen/templates/hyprland.conf".source = ./templates/hyprland.conf;
-    ".config/matugen/templates/kitty.conf".source = ./templates/kitty.conf;
-    ".config/matugen/templates/rofi.rasi".source = ./templates/rofi.rasi;
-    ".config/matugen/templates/cava".source = ./templates/cava;
-    # ".config/matugen/templates/spotify.ini".source = ./templates/spotify.ini;
+    ".config/matugen/templates/colors.css".source = ../templates/colors.css;
+    ".config/matugen/templates/gtk.css".source = ../templates/gtk.css;
+    ".config/matugen/templates/hyprland.conf".source = ../templates/hyprland.conf;
+    ".config/matugen/templates/kitty.conf".source = ../templates/kitty.conf;
+    ".config/matugen/templates/rofi.rasi".source = ../templates/rofi.rasi;
+    ".config/matugen/templates/cava".source = ../templates/cava;
+    # ".config/matugen/templates/spotify.ini".source = ../templates/spotify.ini;
   };
 }

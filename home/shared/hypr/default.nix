@@ -11,21 +11,20 @@
 
 {
   imports = [
-    ./animation.nix
-    ./autostart.nix
-    ./appearance.nix
-    ./environment.nix
-    ./input.nix
-    ./keybinding.nix
-    ./layout.nix
-    ./misc.nix
-    ./monitors.nix
-    ./programs.nix
-    ./tags.nix
-    ./windowrule.nix
-    ./workspaces.nix
-
-    ./colors.nix
+    ./modules/animation.nix
+    ./modules/autostart.nix
+    ./modules/appearance.nix
+    ./modules/environment.nix
+    ./modules/input.nix
+    ./modules/keybinding.nix
+    ./modules/layout.nix
+    ./modules/misc.nix
+    ./modules/monitors.nix
+    ./modules/programs.nix
+    ./modules/tags.nix
+    ./modules/windowrule.nix
+    ./modules/workspaces.nix
+    ./modules/colors.nix
   ];
 
   wayland.windowManager.hyprland = {
