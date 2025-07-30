@@ -21,7 +21,7 @@ echo "🎨 Applying colors from: $WALLPAPER"
 
 # Save current wallpaper path
 mkdir -p ~/.config/hypr
-echo "$WALLPAPER" > ~/.config/hypr/current_wallpaper
+echo "$WALLPAPER" > ~/Workspaces/Config/nixos/current_wallpaper
 
 # Set wallpaper
 "$SCRIPT_DIR/set-wallpaper.sh" "$WALLPAPER"

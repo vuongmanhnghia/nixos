@@ -48,13 +48,13 @@
       output_path = '~/Workspaces/Config/nixos/colors/cava.config'
       post_hook = "pkill -USR1 cava"
 
-      [templates.spicetify]
-      input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/spotify.ini'
-      output_path = '~/Workspaces/Config/nixos/colors/spotify.ini'
+      # [templates.spicetify]
+      # input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/spotify.ini'
+      # output_path = '~/Workspaces/Config/nixos/colors/spotify.ini'
 
-      [templates.vesktop]
-      input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/midnight-discord.css'
-      output_path = '~/Workspaces/Config/nixos/colors/vesktop.css'
+      # [templates.vesktop]
+      # input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/midnight-discord.css'
+      # output_path = '~/Workspaces/Config/nixos/colors/vesktop.css'
     '';
 
     # Các template được đọc từ file riêng
@@ -63,7 +63,7 @@
     ".config/matugen/templates/hyprland.conf".source = ./templates/hyprland.conf;
     ".config/matugen/templates/kitty.conf".source = ./templates/kitty.conf;
     ".config/matugen/templates/rofi.rasi".source = ./templates/rofi.rasi;
-    ".config/matugen/templates/spotify.ini".source = ./templates/spotify.ini;
     ".config/matugen/templates/cava".source = ./templates/cava;
+    # ".config/matugen/templates/spotify.ini".source = ./templates/spotify.ini;
   };
 }

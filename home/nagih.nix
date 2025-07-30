@@ -24,7 +24,8 @@
     discord        # Discord chat and communication platform
     spotify        # Spotify music streaming service
     code-cursor    # Cursor AI-powered code editor
-    
+    vscode         # Visual Studio Code editor
+   
     # === GAMING APPLICATIONS ===
     steam          # Steam gaming platform
     steam-run      # Steam runtime for non-Steam applications

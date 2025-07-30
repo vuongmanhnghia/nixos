@@ -38,7 +38,7 @@
         "sleep 2"  # Đợi fcitx5 khởi động hoàn toàn
         
         # Fcitx5 configuration with unikey - Sử dụng script từ thư mục scripts
-        "~/.config/hypr/scripts/fcitx5-setup.sh"
+        "~//Workspaces/Config/nixos/home/shared/hypr/autostart.nix"
         "sleep 1"  # Đợi script cấu hình hoàn thành
         
         # Restart fcitx5 để áp dụng cấu hình mới
@@ -56,7 +56,7 @@
         "~/.config/viegphunt/gtkthemes.sh"
 
         # Matugen
-        "~/.config/matugen/scripts/matugen-apply $(cat ~/.config/hypr/current_wallpaper)"
+        "~/.config/matugen/scripts/matugen-apply $(cat ~/Workspaces/Config/nixos/current_wallpaper)"
       ];
     };
   };

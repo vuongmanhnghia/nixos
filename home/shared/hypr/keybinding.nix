@@ -45,7 +45,7 @@
         "$mainMod SHIFT, Q, exec, ~/Workspaces/Config/nixos/home/shared/hypr/scripts/kill-active-process.sh"
         "$mainMod CTRL, B, exec, ~/Workspaces/Config/nixos/home/shared/hypr/scripts/waybar-styles.sh" # Waybar Styles Menu
         "$mainMod ALT, B, exec, ~/Workspaces/Config/nixos/home/shared/hypr/scripts/waybar-layout.sh" # Waybar Layout Menu
-        "$mainMod SHIFT, W, exec, matugen-apply $(cat ~/.config/hypr/current_wallpaper)"
+        "$mainMod SHIFT, W, exec, matugen-apply $(cat ~/Workspaces/Config/nixos/current_wallpaper)"
         "$mainMod SHIFT, R, exec, matugen-apply" # Sẽ prompt chọn wallpaper
         
         "$mainMod, left, movefocus, h"

@@ -1,0 +1,206 @@
+# home/shared/rofi.nix - Home Manager configuration
+{ config, pkgs, ... }:
+
+{
+  imports = [ ./colors.nix ]; # Import file colors
+
+  home.packages = with pkgs; [
+    rofi-wayland
+  ];
+
+  xdg.configFile."rofi/config.rasi".text = ''
+    @theme "/dev/null"
+    @import "/home/nagih/Workspaces/Config/nixos/colors/rofi.rasi"
+
+    configuration {
+    	modi: "window,run,drun";
+    	display-drun: "Applications";
+    	display-window: "Windows";
+    	display-run: "Run";
+    	drun-display-format: "{icon} {name}";
+    	font: "JetBrainsMono Nerd Font 10";
+    	show-icons: true;
+    	icon-theme: "Colloid";
+    }
+
+    window {
+        /* properties for window widget */
+        transparency:                "real";
+        location:                    center;
+        anchor:                      center;
+        fullscreen:                  false;
+        width:                       1000px;
+        x-offset:                    0px;
+        y-offset:                    0px;
+
+        /* properties for all widgets */
+        enabled:                     true;
+        border:			 2px solid;
+        border-color:		 @secondary-container;
+        border-radius:               15px;
+        cursor:                      "default";
+        background-color:            @on-primary-fixed;
+    }
+
+    mainbox {
+        enabled:                     true;
+        spacing:                     0px;
+        background-color:            transparent;
+        orientation:                 horizontal;
+        children:                    [ "imagebox", "listbox" ];
+    }
+
+    imagebox {
+        padding:                     20px;
+        background-color:            transparent;
+        background-image:            url("/home/nagih/Workspaces/Config/nixos/current_wallpaper", height);
+        orientation:                 vertical;
+        children:                    [ "inputbar", "dummy", "mode-switcher" ];
+    }
+
+    listbox {
+        spacing:                     20px;
+        padding:                     20px;
+        background-color:            transparent;
+        orientation:                 vertical;
+        children:                    [ "message", "listview" ];
+    }
+
+    dummy {
+        background-color:            transparent;
+    }
+
+    inputbar {
+        enabled:                     true;
+        spacing:                     10px;
+        padding:                     15px;
+        border-radius:               10px;
+        background-color:		     @on-primary;
+        text-color:			         @on-surface;
+        children:                    [ "textbox-prompt-colon", "entry" ];
+    }
+    textbox-prompt-colon {
+        enabled:                     true;
+        expand:                      false;
+        str:                         "  ";
+        background-color:            inherit;
+        text-color:                  inherit;
+    }
+    entry {
+        enabled:                     true;
+        background-color:            inherit;
+        text-color:                  inherit;
+        cursor:                      text;
+        placeholder:                 "Search";
+        placeholder-color:           inherit;
+    }
+
+    mode-switcher{
+        enabled:                     true;
+        spacing:                     20px;
+        background-color:            transparent;
+        text-color:                  @primary-fixed;
+    }
+    button {
+        padding:                     15px;
+        border-radius:               10px;
+        background-color:            @on-primary;
+        text-color:                  inherit;
+        cursor:                      pointer;
+    }
+    button selected {
+        background-color:            @primary;
+        text-color:                  @on-secondary;
+    }
+
+    listview {
+        enabled:                     true;
+        columns:                     1;
+        lines:                       8;
+        cycle:                       true;
+        dynamic:                     true;
+        scrollbar:                   false;
+        layout:                      vertical;
+        reverse:                     false;
+        fixed-height:                true;
+        fixed-columns:               true;
+        
+        spacing:                     10px;
+        background-color:            transparent;
+        text-color:                  @on-surface;
+        cursor:                      "default";
+    }
+
+    element {
+        enabled:                     true;
+        spacing:                     15px;
+        padding:                     8px;
+        border-radius:               10px;
+        background-color:            transparent;
+        text-color:                  @on-surface;
+        cursor:                      pointer;
+    }
+    element normal.normal {
+        background-color:            inherit;
+        text-color:                  inherit;
+    }
+    element normal.urgent {
+        background-color:            @error;
+        text-color:                  @on-surface;
+    }
+    element normal.active {
+        background-color:            @primary;
+        text-color:                  @on-surface;
+    }
+    element selected.normal {
+        background-color:            @primary;
+        text-color:                  @on-secondary;
+    }
+    element selected.urgent {
+        background-color:            @error;
+        text-color:                  @on-secondary;
+    }
+    element selected.active {
+        background-color:            @error;
+        text-color:                  @on-secondary;
+    }
+    element-icon {
+        background-color:            transparent;
+        text-color:                  inherit;
+        size:                        32px;
+        cursor:                      inherit;
+    }
+    element-text {
+        background-color:            transparent;
+        text-color:                  inherit;
+        cursor:                      inherit;
+        vertical-align:              0.5;
+        horizontal-align:            0.0;
+    }
+
+    message {
+        background-color:            transparent;
+    }
+    textbox {
+        padding:                     15px;
+        border-radius:               10px;
+        background-color:            @on-primary;
+        text-color:                  @on-surface;
+        vertical-align:              0.5;
+        horizontal-align:            0.0;
+    }
+    error-message {
+        padding:                     15px;
+        border-radius:               20px;
+        background-color:            @on-primary;
+        text-color:                  @on-surface;
+    }
+  '';
+
+  # Tạo shell aliases cho rofi (tùy chọn)
+  home.shellAliases = {
+    rofi-apps = "rofi -show drun";
+    rofi-run = "rofi -show run";
+    rofi-windows = "rofi -show window";
+  };
+}

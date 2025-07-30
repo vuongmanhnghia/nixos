@@ -3,7 +3,7 @@
 set -e
 
 WALLPAPER_DIR="~/Workspaces/Config/nixos/wallpapers"
-SYMLINK_PATH="~/Workspaces/Config/nixos/home/shared/hypr/current_wallpaper" 
+SYMLINK_PATH="~/Workspaces/Config/nixos/current_wallpaper" 
 MATUGEN_CONFIG="$HOME/.config/matugen/config.toml"
 
 # Function to test filesystem write access

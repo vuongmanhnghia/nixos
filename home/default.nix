@@ -8,12 +8,16 @@
     ./shared/matugen/default.nix # Matugen configuration
     ./shared/waybar/default.nix  # Waybar configuration
     ./shared/swaync/default.nix  # Swaync configuration
+    ./shared/rofi/default.nix    # Rofi configuration
     ./shared/fonts.nix           # Fonts
     ./shared/git.nix             # Git version control configuration
     ./shared/zsh.nix             # Zsh shell with aliases and modern CLI tools
     ./shared/neovim.nix          # Neovim editor configuration with LSP
     ./shared/gtk-theme.nix       # GTK theme configuration (Phase 2)
     ./shared/kitty.nix           # Kitty terminal configuration
+    ./shared/fastfetch.nix       # Fastfetch configuration
+    ./shared/ripgrep.nix         # Ripgrep configuration
+    ./shared/wlogout/default.nix # Wlogout configuration
   ];
 
   # === ESSENTIAL PACKAGES FOR ALL USERS ===
@@ -41,22 +45,10 @@
   ];
 
   # === WLOUT CONFIGURATION ===
-  home.file.".config/wlogout" = {
-    source = ../dotfiles/wlogout;
-    recursive = true;
-  };
-
-  #  === ROFI CONFIGURATION ===
-  home.file.".config/rofi" = {
-    source = ../dotfiles/rofi;
-    recursive = true;
-  };
-
-  # === FASTFETCH CONFIGURATION ===
-  home.file.".config/fastfetch" = {
-    source = ../dotfiles/fastfetch;
-    recursive = true;
-  };
+  # home.file.".config/wlogout" = {
+  #   source = ../dotfiles/wlogout;
+  #   recursive = true;
+  # };
 
   # === TMUX CONFIGURATION ===
   programs.tmux = {
@@ -77,7 +69,7 @@
 
   # === CAVA CONFIGURATION ===
   home.file.".config/cava/config" = {
-    source = ../dotfiles/cava/config;
+    source = /home/nagih/Workspaces/Config/nixos/colors/cava.config;
   };
 
   # === SSH CONFIGURATION ===
