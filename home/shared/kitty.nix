@@ -6,7 +6,7 @@
     
     font = {
       name = "JetBrainsMono NF Bold";
-      size = 12.0;
+      size = 14.0;
     };
     
     settings = {
@@ -16,7 +16,7 @@
       bold_italic_font = "auto";
 
       # Window settings
-      background_opacity = "0.9";
+      background_opacity = "0.8";
       confirm_os_window_close = 0;
       window_padding_width = 4;
 

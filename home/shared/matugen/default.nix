@@ -6,6 +6,7 @@
     ./config.nix
     ./aliases.nix
     ./service.nix
+    ./auto-wallpaper.nix
   ];
 
   # Install matugen package

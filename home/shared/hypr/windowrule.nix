@@ -47,8 +47,6 @@
 
         "float, initialTitle:(Open Files)"
         "size 70% 60%, initialTitle:(Open Files)"
-        
-        
       ];
 
       layerrule = [

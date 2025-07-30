@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   # === NOTION CONFIGURATION ===
@@ -10,16 +10,17 @@ let
       url = "https://github.com/kidonng/notion-appimage/releases/download/2.3.2-1/Notion-2.3.2-1-x86-64.AppImage";
       sha256 = "06ki585zpdzsljknal6by6dac24r6r82w844h70ngzqf6y7lwxgy";
     };
-    # Additional AppImage options for better integration
     extraPkgs = pkgs: with pkgs; [ ];
   };
 in
 {
-  # === VIETNAMESE INPUT METHOD CONFIGURATION ===
+  # === CLEAN FCITX5 CONFIGURATION ===
+  # Tắt hoàn toàn các input method cũ
   i18n.inputMethod = {
-    enable = true;           # Enable input method support
-    type = "fcitx5";         # Use Fcitx5 input method framework (modern and efficient)
+    enable = true;
+    type = "fcitx5";
     fcitx5 = {
+      waylandFrontend = true;
       addons = with pkgs; [
         fcitx5-unikey          # Vietnamese input method (Unikey for Vietnamese typing)
         fcitx5-gtk             # GTK integration for better desktop environment support
@@ -28,7 +29,6 @@ in
         fcitx5-configtool      # Configuration tool
         fcitx5-with-addons     # Additional addons for better compatibility
       ];
-      waylandFrontend = true;  # Enable Wayland frontend
     };
   };
 
@@ -171,7 +171,7 @@ in
     };
   };
 
-  # === FCITX5 SERVICE CONFIGURATION FOR GNOME INTEGRATION ===
+# === FCITX5 SERVICE CONFIGURATION FOR GNOME INTEGRATION ===
   services.dbus.packages = with pkgs; [ fcitx5 ];
   
   # === SYSTEM PACKAGES: INPUT METHOD + MULTIMEDIA APPLICATIONS ===
