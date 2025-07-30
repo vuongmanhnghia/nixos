@@ -46,7 +46,7 @@
       [templates.cava]
       input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/cava'
       output_path = '~/Workspaces/Config/nixos/colors/cava.config'
-      post_hook = "pkill -USR1 cava"
+      post_hook = "pkill -SIGUSR2 cava"
 
       # [templates.spicetify]
       # input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/spotify.ini'
