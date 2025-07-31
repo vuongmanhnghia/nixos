@@ -8,6 +8,7 @@
     ./golang.nix       # Go development environment and tools
     ./gaming.nix       # Gaming platform (Steam, GameMode, controllers, Wine)
     ./multimedia.nix   # Multimedia applications (VLC, GIMP, LibreOffice, Vietnamese input)
+    ./entries.nix      # Desktop entries
   ];
   
   # === SHELL CONFIGURATION ===

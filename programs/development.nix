@@ -20,6 +20,16 @@
     };
   };
 
+  xdg.desktopEntries.cursor-wayland = {
+    name = "Cursor (Wayland)";
+    comment = "Cursor Code Editor for Wayland";
+    exec = "cursor --disable-gpu";
+    icon = "cursor";
+    terminal = false;
+    categories = [ "Development" "IDE" ];
+    startupWMClass = "cursor";
+  };
+
   # === DEVELOPMENT TOOLS AND UTILITIES ===
   environment.systemPackages = with pkgs; [
     # === VERSION CONTROL ===
