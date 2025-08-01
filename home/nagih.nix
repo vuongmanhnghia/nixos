@@ -17,6 +17,11 @@
     userEmail = "vuongmanhnghia@gmail.com"; # Git commit author email
   };
 
+  xdg.desktopEntries.cursor = {
+    name = "Cursor";
+    noDisplay = true;
+  };
+
   # === USER-SPECIFIC APPLICATIONS ===
   home.packages = with pkgs; [
     # === PERSONAL PRODUCTIVITY APPLICATIONS ===

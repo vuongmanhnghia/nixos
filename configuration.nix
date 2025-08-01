@@ -1,4 +1,4 @@
-{ config, pkgs, inputs ? {}, ... }:
+{ config, pkgs, inputs ? {}, lib, ... }:
 
 {
   # Import all configuration modules
@@ -12,6 +12,15 @@
   # SSH configuration
   programs.ssh.startAgent = true; # Start SSH agent for key management
   services.openssh.enable = true; # Enable SSH daemon for remote access
+
+  # Disable nscd
+  services.nscd.enable = false;
+
+  # Sử dụng systemd-resolved thay thế
+  services.resolved.enable = true;
+
+  # Disable NSS modules để tránh conflict
+  system.nssModules = lib.mkForce [];
     
   # Enable Nix flakes and new command syntax
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

@@ -4,55 +4,7 @@
 {
   # Script để chọn wallpaper ngẫu nhiên
   home.file.".local/bin/auto-wallpaper.sh" = {
-    text = ''
-      #!/run/current-system/sw/bin/bash
-      
-      WALLPAPER_DIR="$HOME/Workspaces/Config/nixos/wallpapers"
-      CURRENT_WALLPAPER="$HOME/Workspaces/Config/nixos/current_wallpaper"
-      
-      # Kiểm tra thư mục wallpaper tồn tại
-      if [ ! -d "$WALLPAPER_DIR" ]; then
-          echo "Wallpaper directory not found: $WALLPAPER_DIR"
-          exit 1
-      fi
-      
-      # Lấy danh sách các file wallpaper
-      WALLPAPERS=($(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) 2>/dev/null))
-      
-      if [ ''${#WALLPAPERS[@]} -eq 0 ]; then
-          echo "No wallpapers found in $WALLPAPER_DIR"
-          exit 1
-      fi
-      
-      # Lấy wallpaper hiện tại (nếu có)
-      CURRENT=""
-      if [ -f "$CURRENT_WALLPAPER" ]; then
-          CURRENT=$(readlink -f "$CURRENT_WALLPAPER" 2>/dev/null || cat "$CURRENT_WALLPAPER" 2>/dev/null)
-      fi
-      
-      # Chọn wallpaper ngẫu nhiên (khác với hiện tại nếu có nhiều hơn 1 wallpaper)
-      SELECTED_WALLPAPER=""
-      if [ ''${#WALLPAPERS[@]} -gt 1 ]; then
-          while [ -z "$SELECTED_WALLPAPER" ] || [ "$SELECTED_WALLPAPER" = "$CURRENT" ]; do
-              SELECTED_WALLPAPER="''${WALLPAPERS[$RANDOM % ''${#WALLPAPERS[@]}]}"
-          done
-      else
-          SELECTED_WALLPAPER="''${WALLPAPERS[0]}"
-      fi
-      
-      echo "🎨 Auto-changing wallpaper to: $(basename "$SELECTED_WALLPAPER")"
-      
-      # Áp dụng wallpaper mới với matugen
-      ${pkgs.matugen}/bin/matugen image "$SELECTED_WALLPAPER"
-      
-      # Cập nhật symlink
-      ln -sf "$SELECTED_WALLPAPER" "$CURRENT_WALLPAPER"
-      
-      # Gửi thông báo
-      ${pkgs.libnotify}/bin/notify-send "Auto Wallpaper" "Changed to $(basename "$SELECTED_WALLPAPER")" \
-          --icon=applications-graphics \
-          --urgency=low
-    '';
+    source = ../scripts/auto-wallpaper.sh;
     executable = true;
   };
 

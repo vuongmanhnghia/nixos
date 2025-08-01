@@ -1,18 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  # === NOTION CONFIGURATION ===
-  notion-app = pkgs.appimageTools.wrapType2 {
-    pname = "notion-app";
-    name = "notion-app";
-    version = "2.3.2-1";
-    src = pkgs.fetchurl {
-      url = "https://github.com/kidonng/notion-appimage/releases/download/2.3.2-1/Notion-2.3.2-1-x86-64.AppImage";
-      sha256 = "06ki585zpdzsljknal6by6dac24r6r82w844h70ngzqf6y7lwxgy";
-    };
-    extraPkgs = pkgs: with pkgs; [ ];
-  };
-in
 {
   # === CLEAN FCITX5 CONFIGURATION ===
   # Tắt hoàn toàn các input method cũ
@@ -184,7 +171,6 @@ in
     
     # === OFFICE PRODUCTIVITY ===
     libreoffice               # LibreOffice suite - complete office productivity suite (Writer, Calc, Impress)
-    notion-app                # Notion - all-in-one workspace for notes, tasks, wikis, and databases
     
     # === DOCUMENT VIEWERS ===
     evince                    # GNOME document viewer for PDF, PostScript, and other formats

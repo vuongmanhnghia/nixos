@@ -43,10 +43,10 @@
       input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/rofi.rasi'
       output_path = '~/Workspaces/Config/nixos/colors/rofi.rasi'
 
-      [templates.cava]
-      input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/cava'
-      output_path = '~/Workspaces/Config/nixos/colors/cava.config'
-      post_hook = "pkill -SIGUSR2 cava"
+      # [templates.cava]
+      # input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/cava'
+      # output_path = '~/Workspaces/Config/nixos/colors/cava.config'
+      # post_hook = "pkill -SIGUSR2 cava"
 
       # [templates.spicetify]
       # input_path = '~/Workspaces/Config/nixos/home/shared/matugen/templates/spotify.ini'

@@ -28,3 +28,4 @@ echo "🔍 Creating symlink: $SYMLINK_PATH"
 # === CREATE SYMLINK ===
 mkdir -p "$(dirname "$SYMLINK_PATH")"
 ln -sf "$SELECTED_PATH" "$SYMLINK_PATH"
+
