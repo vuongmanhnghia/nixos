@@ -29,7 +29,8 @@
         "$mainMod, B, exec, $browser"
         # "$mainMod, F, togglefloating"
         "$mainMod, F, fullscreen"
-        "$mainMod, C, exec, hyprpicker -a"
+        # "$mainMod, C, exec, hyprpicker -a"
+        "$mainMod, C, exec, $codeEditor"
         "$mainMod, P, pseudo"
         "$mainMod, J, togglesplit"
         "$mainMod, H, exec, pkill -SIGUSR1 waybar" # Hide Waybar

@@ -2,44 +2,39 @@
 
 {
   # === CLEAN FCITX5 CONFIGURATION ===
-  # Tắt hoàn toàn các input method cũ
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
     fcitx5 = {
       waylandFrontend = true;
       addons = with pkgs; [
-        fcitx5-unikey          # Vietnamese input method (Unikey for Vietnamese typing)
-        fcitx5-gtk             # GTK integration for better desktop environment support
-        libsForQt5.fcitx5-qt   # Qt5 integration for Qt5 applications
-        qt6Packages.fcitx5-qt  # Qt6 integration for Qt6 applications  
+        fcitx5-unikey          # Vietnamese input method
+        fcitx5-gtk             # GTK integration
+        libsForQt5.fcitx5-qt   # Qt5 integration
+        qt6Packages.fcitx5-qt  # Qt6 integration  
         fcitx5-configtool      # Configuration tool
-        fcitx5-with-addons     # Additional addons for better compatibility
+        fcitx5-with-addons     # Additional addons
       ];
     };
   };
 
-  # === ENVIRONMENT VARIABLES FOR OPTIMAL WAYLAND SUPPORT ===
+  # === ENVIRONMENT VARIABLES - SỬA LỖI ===
   environment.sessionVariables = {
-    # Input Method Module settings for different toolkits
-    GTK_IM_MODULE = "fcitx";     # Force GTK to use fcitx even on Wayland
-    QT_IM_MODULE = "fcitx";      # Qt applications
-    XMODIFIERS = "@im=fcitx";    # For XWayland applications
-    SDL_IM_MODULE = "fcitx";     # SDL applications
-    GLFW_IM_MODULE = "ibus";     # GLFW applications fallback
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    SDL_IM_MODULE = "fcitx";
+    # SỬA: Thống nhất dùng fcitx thay vì ibus
+    GLFW_IM_MODULE = "fcitx";
     
-    # Fcitx5 specific environment variables
     FCITX_ENABLE_WAYLAND = "1";
   };
 
-  # === FCITX5 CONFIGURATION FOR PER-APPLICATION INPUT METHOD ===
+  # === FCITX5 CONFIG - SỬA LỖI ===
   environment.etc."xdg/fcitx5/config".text = ''
     [Hotkey]
-    # Trigger keys for input method switching
     TriggerKeys=
-    # Enumerate input methods when switching
     EnumerateWithTriggerKeys=True
-    # Skip first input method when enumerating  
     EnumerateSkipFirst=False
 
     [Hotkey/TriggerKeys]
@@ -48,92 +43,85 @@
     2=Hangul
 
     [Behavior]
-    # Active by default when typing
-    ActiveByDefault=False
-    # CRITICAL: Share input state among all applications (false = per-application)
+    # SỬA: Đặt ActiveByDefault=True để fcitx5 luôn active
+    ActiveByDefault=True
+    # Quan trọng: Để per-application input method
     ShareInputState=False
-    # Per-application input method state
-    PreeditEnabledByDefault=False
-    # Show input method information when switching
+    PreeditEnabledByDefault=True
     ShowInputMethodInformation=True
-    # Show input method information when focus changes
     showInputMethodInformationWhenFocusIn=True
-    # Compact input method information
     CompactInputMethodInformation=True
-    # Show first input method mode
     ShowFirstInputMethodInformation=True
-    # Default page size for candidate list
     DefaultPageSize=5
-    # Override Xkb Options
     OverrideXkbOption=False
-    # Custom Xkb Options
     CustomXkbOption=
-    # Force enabled addons
     EnabledAddons=
-    # Force disabled addons  
     DisabledAddons=
-    # Preload input method for faster switching
     PreloadInputMethod=True
-    # Allow input method override system XKB settings
     AllowInputMethodForPassword=False
-    # Show preedit in application when possible
     PreeditInApplication=True
-    # Remember input method state per application
-    DefaultInputMethodState=Inactive
+    # SỬA: Đặt default state là Active
+    DefaultInputMethodState=Active
   '';
 
-  # === FCITX5 PROFILE CONFIGURATION FOR INPUT METHOD SWITCHING ===
+  # === PROFILE CONFIGURATION - SỬA LỖI ===
   environment.etc."xdg/fcitx5/profile".text = ''
     [Groups/0]
-    # Group Name
     Name=Default
-    # Layout
     Default Layout=us
-    # Default Input Method
-    DefaultIM=keyboard-us
+    # SỬA: Đặt unikey làm default input method
+    DefaultIM=unikey
 
     [Groups/0/Items/0]
-    # Name
     Name=keyboard-us
-    # Layout
-    Layout=
+    Layout=us
 
     [Groups/0/Items/1]
-    # Name
     Name=unikey
-    # Layout
-    Layout=
+    # SỬA: Thêm layout cho unikey
+    Layout=us
 
     [GroupOrder]
     0=Default
   '';
 
-  # === ADDITIONAL FCITX5 CONFIGURATIONS FOR WAYLAND ===
-  # User-level configuration to override system defaults
-  environment.etc."xdg/fcitx5/conf/classicui.conf".text = ''
-    # Vertical Candidate List
-    Vertical Candidate List=False
-    # Use mouse wheel to go to prev or next page
-    WheelForPaging=True
-    # Font
-    Font="Sans 10"
-    # Menu Font
-    MenuFont="Sans 10"
-    # Use Per Screen DPI
-    PerScreenDPI=True
-    # Force font DPI on Wayland
-    ForceWaylandDPI=0
-    # Enable fractional scale under Wayland
-    EnableFractionalScale=True
+  # === THÊM: CẤU HÌNH UNIKEY ===
+  environment.etc."xdg/fcitx5/conf/unikey.conf".text = ''
+    # Input Method
+    InputMethod=Telex
+    # Output Charset
+    OutputCharset=Unicode
+    # Process W at word beginning
+    ProcessWAtWordBeginning=True
+    # Spellcheck
+    SpellCheck=True
+    # Macro enabled
+    MacroEnabled=True
+    # Mouse Capture
+    MouseCapture=True
   '';
 
-  # === FCITX5 ADDON CONFIGURATION ===
+  # === UI CONFIGURATION ===
+  environment.etc."xdg/fcitx5/conf/classicui.conf".text = ''
+    Vertical Candidate List=False
+    WheelForPaging=True
+    Font="Sans 10"
+    MenuFont="Sans 10"
+    PerScreenDPI=True
+    ForceWaylandDPI=0
+    EnableFractionalScale=True
+    # THÊM: Cấu hình theme
+    Theme=default
+    DarkTheme=default-dark
+    UseDarkTheme=False
+  '';
+
+  # === NOTIFICATIONS ===
   environment.etc."xdg/fcitx5/conf/notifications.conf".text = ''
-    # Notifications when switching input method
     HiddenNotifications=
   '';
 
-  # === SYSTEMD USER SERVICE FOR FCITX5 AUTOSTART ===
+  # === SYSTEMD SERVICE - ĐƯỢC CẢI THIỆN ===
   systemd.user.services.fcitx5-daemon = {
     description = "Fcitx5 input method editor";
     partOf = [ "graphical-session.target" ];
@@ -145,7 +133,10 @@
       QT_IM_MODULE = "fcitx";
       XMODIFIERS = "@im=fcitx";
       SDL_IM_MODULE = "fcitx";
+      GLFW_IM_MODULE = "fcitx";  # SỬA: Thống nhất
       FCITX_ENABLE_WAYLAND = "1";
+      # THÊM: Đảm bảo fcitx5 tìm được config
+      XDG_CONFIG_HOME = "%h/.config";
     };
     
     serviceConfig = {
@@ -155,27 +146,50 @@
       ExecReload = "${pkgs.coreutils}/bin/kill -USR1 $MAINPID";
       Restart = "on-failure";
       RestartSec = 3;
+      # THÊM: Đảm bảo service chạy sau khi desktop environment sẵn sàng
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
     };
   };
 
-# === FCITX5 SERVICE CONFIGURATION FOR GNOME INTEGRATION ===
+  # === DBUS CONFIGURATION ===
   services.dbus.packages = with pkgs; [ fcitx5 ];
   
-  # === SYSTEM PACKAGES: INPUT METHOD + MULTIMEDIA APPLICATIONS ===
+  # === THÊM: ĐẢM BẢO FCITX5 AUTOSTART ===
+  environment.etc."xdg/autostart/fcitx5.desktop".text = ''
+    [Desktop Entry]
+    Name=Fcitx 5
+    GenericName=Input Method
+    Comment=Start Input Method
+    Exec=fcitx5
+    Icon=fcitx
+    Terminal=false
+    Type=Application
+    Categories=System;Utility;
+    StartupNotify=false
+    X-GNOME-Autostart-Phase=Applications
+    X-GNOME-AutoRestart=false
+    X-GNOME-Autostart-Notify=false
+    X-KDE-autostart-after=panel
+  '';
+  
+  # === SYSTEM PACKAGES ===
   environment.systemPackages = with pkgs; [
     # === MEDIA PLAYERS ===
-    vlc                       # VLC media player - versatile multimedia player supporting most formats
+    vlc
     
     # === IMAGE EDITING AND GRAPHICS ===
-    gimp                      # GNU Image Manipulation Program - advanced image editor
+    gimp
     
     # === OFFICE PRODUCTIVITY ===
-    libreoffice               # LibreOffice suite - complete office productivity suite (Writer, Calc, Impress)
+    libreoffice
     
     # === DOCUMENT VIEWERS ===
-    evince                    # GNOME document viewer for PDF, PostScript, and other formats
+    evince
     
     # === ARCHIVE MANAGEMENT ===
-    file-roller               # GNOME archive manager for creating and extracting compressed files
+    file-roller
+    
+    # THÊM: Input method utilities
+    fcitx5-configtool
   ];
-} 
+}
